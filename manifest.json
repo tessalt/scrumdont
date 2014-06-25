@@ -1,0 +1,16 @@
+{
+  "manifest_version": 2,
+
+  "name": "ScrumDon't",
+  "description": "Strollin'",
+  "version": "1.0",
+  "options_page": "options.html",
+  "browser_action": {
+    "default_icon": "scrumdont_small.png",
+    "default_popup": "index.html"
+  },
+  "permissions":["webRequest", "webRequestBlocking",
+        "http://*/*",
+        "https://*/*"
+    ]
+}
