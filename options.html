@@ -18,9 +18,15 @@
 
   <div ng-controller="ScrumCtrl">
     
-    <div ng-repeat="project in projects">
-      {{project.name}}
-    </div>
+    <select ng-model="currentProject" ng-options="project.name for project in projects"></select>
+
+    <select ng-model="member" ng-options="member.username for member in currentProject.members"></select>
+
+    <button ng-click="saveOptions(currentProject, member)">Save</button>
+
+    <h1>{{currentProject.name}}</h1>
+
+    <h1>{{member.username}}</h1>
     
   </div>
 
