@@ -19,11 +19,16 @@
 
   <div ng-controller="ScrumCtrl">
 
-    <button ng-click="refresh()">Refresh</button>
+    <header class="popup-header">
+      <h1>ScrumDon't</h1>
+      <img ng-click="refresh()" src="refresh.svg" width="32" height="32">
+    </header>
 
-    <p>{{currentProject.name || 'Please select a project'}}</p>
+    <p ng-hide="currentProject.name">{{'Please select a project'}}</p>
 
-    <p>{{member.username || 'Please select a user'}}</p>
+    <p ng-hide="member.username">{{'Please select a user'}}</p>
+
+    <div class="card">
 
     <ul>
       <li ng-repeat="story in stories">
@@ -33,6 +38,7 @@
         </ul>
       </li>
     </ul>
+    </div>
 
   </div>
 
