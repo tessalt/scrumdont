@@ -16,16 +16,21 @@
 </head>
 <body ng-app="scrumDont">
 
-  <div ng-controller="ScrumCtrl">       
+  <div ng-controller="ScrumCtrl">
 
     <p>{{currentProject.name || 'Please select a project'}}</p>
 
     <p>{{member.username || 'Please select a user'}}</p>
 
     <ul>
-      <li ng-repeat="story in stories">{{story.summary}}</li>
+      <li ng-repeat="story in stories">
+        {{story.summary}}
+        <ul>
+          <li ng-repeat="task in story.taskArray">{{task.summary}} <strong>{{task.status}}</strong></li>
+        </ul>
+      </li>
     </ul>
-    
+
   </div>
 
 </body>

@@ -17,7 +17,9 @@
 <body ng-app="scrumDont">
 
   <div ng-controller="ScrumCtrl">
-    
+
+  <paper-button label="flat button"></paper-button>
+
     <select ng-model="currentProject" ng-options="project.name for project in projects"></select>
 
     <select ng-model="member" ng-options="member.username for member in currentProject.members"></select>
@@ -27,7 +29,7 @@
     <h1>{{currentProject.name}}</h1>
 
     <h1>{{member.username}}</h1>
-    
+
   </div>
 
 </body>

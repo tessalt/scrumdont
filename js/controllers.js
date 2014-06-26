@@ -12,17 +12,21 @@ angular.module('scrumDont.controllers', []).
         localStorage['currentProject'] = JSON.stringify(currentProject);
       }
     }
-    
+
     Project.query(function(data){
-      $scope.projects = data;  
+      $scope.projects = data;
     });
 
     Tasks.buildAll($scope.currentProject.slug).then(function (results){
       var taskArray = [];
       angular.forEach(results, function(result) {
-        console.log(Tasks.findRelevant(result, $scope.member));
+        var sub = Tasks.findRelevant(result, $scope.member);
+        if (typeof sub !== 'undefined') {
+          taskArray.push(sub);
+        }
       });
-    });    
+      $scope.stories = taskArray;
+    });
 
 
   });

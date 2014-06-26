@@ -5,7 +5,7 @@ angular.module('scrumDont.services', ['ngResource'])
   .factory('Story', function ($resource) {
     return $resource('https://www.scrumdo.com/api/v2/organizations/telus3/projects/:slug/stories/:story', {}, {
       'query': {
-        method: 'GET', 
+        method: 'GET',
         transformResponse: function(data) {
           return angular.fromJson(data).items;
         },
@@ -17,11 +17,11 @@ angular.module('scrumDont.services', ['ngResource'])
     var tasks = {};
     var fetchTasks = function(rawStory) {
       var deferred = $q.defer();
-      $http({method: 'GET', url: 'https://www.scrumdo.com/api/v2/organizations/telus3/projects/' + rawStory.project_slug + '/stories/' + rawStory.id + '/tasks' }).success(function (tasks){              
+      $http({method: 'GET', url: 'https://www.scrumdo.com/api/v2/organizations/telus3/projects/' + rawStory.project_slug + '/stories/' + rawStory.id + '/tasks' }).success(function (tasks){
         deferred.resolve({story: rawStory, tasks: tasks});
       });
       return deferred.promise;
-    } 
+    }
     var filterTasks = function(task, member) {
       return task.complete === false && task.assignee && task.assignee.username === member;
     }
@@ -29,15 +29,12 @@ angular.module('scrumDont.services', ['ngResource'])
       var hasTasks = false;
       item.story.taskArray = [];
       angular.forEach(item.tasks, function (task){
-          console.log(task);
-        if (filterTasks(task, member)) {
+        if (filterTasks(task, member.username)) {
           hasTasks = true;
           item.story.taskArray.push(task);
         }
       });
-      console.log(item.story.taskArray);
       if (hasTasks === true) {
-
         return item.story;
       }
     }
