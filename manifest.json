@@ -3,13 +3,15 @@
 
   "name": "ScrumDon't",
   "description": "Strollin'",
-  "version": "1.0",
+  "version": "2.0",
   "options_page": "options.html",
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "browser_action": {
     "default_icon": "scrumdont_small.png",
     "default_popup": "index.html"
   },
+  "icons": { "64": "scrumdont_small.png",
+          "128": "scrumdont.png" },
   "permissions":["webRequest", "webRequestBlocking",
         "http://*/*",
         "https://*/*"
