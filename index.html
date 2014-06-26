@@ -21,6 +21,10 @@
     <p>{{currentProject.name || 'Please select a project'}}</p>
 
     <p>{{member.username || 'Please select a user'}}</p>
+
+    <ul>
+      <li ng-repeat="story in stories">{{story.summary}}</li>
+    </ul>
     
   </div>
 
