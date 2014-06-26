@@ -28,7 +28,7 @@ scrumDont.directive("loadingIndicator", function() {
     template: "<div></div>",
     link : function(scope, element, attrs) {
       scope.$on("loading-started", function(e) {
-        element.css({"display" : ""});
+        element.css({"display" : "block"});
       });
 
       scope.$on("loading-complete", function(e) {

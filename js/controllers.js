@@ -1,29 +1,19 @@
 angular.module('scrumDont.controllers', []).
 
-  controller('ScrumCtrl', function ($scope, Project, Tasks, $q) {
-
-    Project.query(function(data){
-      $scope.projects = data;
-    });
+  controller('ScrumCtrl', function ($scope, Tasks, $q) {
 
     $scope.member = localStorage.member !== undefined ? JSON.parse(localStorage.member) : '';
 
     $scope.currentProject = localStorage.currentProject !== undefined ? JSON.parse(localStorage.currentProject) : '';
 
-    $scope.optionsSet = false;
+    $scope.optionsSet = typeof $scope.member !== undefined && typeof $scope.currentProject.length !== undefined;
 
-    $scope.saveOptions = function(currentProject, member) {
-      if (member && currentProject) {
-        localStorage['member'] = JSON.stringify(member);
-        localStorage['currentProject'] = JSON.stringify(currentProject);
-        $scope.optionsSet = true;
+    if ($scope.optionsSet) {    
+      if (typeof localStorage.stories !== 'undefined' && recentRefresh()) {
+        $scope.stories = JSON.parse(localStorage.stories);
+      } else {
+        populateStories();
       }
-    }
-
-    if (typeof localStorage.stories !== 'undefined' && recentRefresh()) {
-      $scope.stories = JSON.parse(localStorage.stories);
-    } else {
-      populateStories();
     }
 
     $scope.refresh = function() {
@@ -65,6 +55,28 @@ angular.module('scrumDont.controllers', []).
         localStorage['stories'] = JSON.stringify(taskArray);
         localStorage['lastUpdate'] = new Date();
       });
+    }
+
+  }).
+
+  controller('OptionCtrl', function ($scope, Project, $q) {
+
+    $scope.optionsSet = false;
+
+    Project.query(function(data){
+      $scope.projects = data;
+    });
+
+    $scope.member = localStorage.member !== undefined ? JSON.parse(localStorage.member) : '';
+
+    $scope.currentProject = localStorage.currentProject !== undefined ? JSON.parse(localStorage.currentProject) : '';
+
+    $scope.saveOptions = function(currentProject, member) {
+      if (member && currentProject) {
+        localStorage['member'] = JSON.stringify(member);
+        localStorage['currentProject'] = JSON.stringify(currentProject);
+        $scope.optionsSet = true;
+      }
     }
 
   });

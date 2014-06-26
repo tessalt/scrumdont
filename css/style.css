@@ -163,6 +163,7 @@ button:focus {
   width: 100%;
   background: #91a7ff;
   position: relative;
+  display: none;
 }
 
 .loading:before {
