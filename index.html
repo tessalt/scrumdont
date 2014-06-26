@@ -36,6 +36,11 @@
 
     <div class="loading" loading-indicator></div>
 
+    <div class="card card-padding alert alert-error" ng-show="noTasks">
+      <p>No tasks!</p>
+      <button ng-click="options()">Update options</button>
+    </div>
+
     <div class="card">
 
       <ul>

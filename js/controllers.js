@@ -8,6 +8,8 @@ angular.module('scrumDont.controllers', []).
 
     $scope.optionsSet = typeof $scope.member !== undefined && typeof $scope.currentProject.length !== undefined;
 
+    $scope.noTasks = false;
+
     if ($scope.optionsSet) {    
       if (typeof localStorage.stories !== 'undefined' && recentRefresh()) {
         $scope.stories = JSON.parse(localStorage.stories);
@@ -52,6 +54,9 @@ angular.module('scrumDont.controllers', []).
           }
         });
         $scope.stories = taskArray;
+        if (taskArray.length < 1) {
+          $scope.noTasks = true;
+        }
         localStorage['stories'] = JSON.stringify(taskArray);
         localStorage['lastUpdate'] = new Date();
       });
