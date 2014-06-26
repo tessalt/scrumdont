@@ -19,6 +19,8 @@
 
   <div ng-controller="ScrumCtrl">
 
+    <button ng-click="refresh()">Refresh</button>
+
     <p>{{currentProject.name || 'Please select a project'}}</p>
 
     <p>{{member.username || 'Please select a user'}}</p>
