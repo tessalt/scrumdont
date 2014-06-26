@@ -20,15 +20,16 @@ angular.module('scrumDont.controllers', []).
       }
     }
 
-    if (typeof localStorage.stories !== 'undefined') {
+    if (typeof localStorage.stories !== 'undefined' && recentRefresh()) {
       $scope.stories = JSON.parse(localStorage.stories);
     } else {
-      fetchTasks();
+      populateStories();
     }
 
     $scope.refresh = function() {
+      localStorage['stories'] = '';
       $scope.stories = [];
-      fetchTasks();
+      populateStories();
     }
 
     $scope.options = function() {
@@ -39,7 +40,19 @@ angular.module('scrumDont.controllers', []).
       chrome.tabs.create({'url': url});
     }
 
-    function fetchTasks() {
+    function recentRefresh() {
+      var now = new Date()
+      var lastUpdate = new Date(localStorage.lastUpdate);
+      ms = now.getTime() - lastUpdate.getTime();
+      minutes = parseInt((ms/(1000*60))%60);
+      if (minutes > 5) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    function populateStories() {
       Tasks.buildAll($scope.currentProject.slug).then(function (results){
         var taskArray = [];
         angular.forEach(results, function(result) {
@@ -50,6 +63,7 @@ angular.module('scrumDont.controllers', []).
         });
         $scope.stories = taskArray;
         localStorage['stories'] = JSON.stringify(taskArray);
+        localStorage['lastUpdate'] = new Date();
       });
     }
 
