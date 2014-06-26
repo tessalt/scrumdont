@@ -35,6 +35,10 @@ angular.module('scrumDont.controllers', []).
       chrome.tabs.create({'url': chrome.extension.getURL("options.html") } );
     }
 
+    $scope.openStory = function(url) {
+      chrome.tabs.create({'url': url});
+    }
+
     function fetchTasks() {
       Tasks.buildAll($scope.currentProject.slug).then(function (results){
         var taskArray = [];

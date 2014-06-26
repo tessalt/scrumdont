@@ -38,3 +38,36 @@ scrumDont.directive("loadingIndicator", function() {
     }
   };
 });
+
+scrumDont.directive("storyLink", function() {
+  return {
+    restrict : "A",
+    template: "<div>{{story.summary}}</div>",
+    link : function(scope, element, attrs) {
+      var url = "https://www.scrumdo.com/projects/project/" + scope.story.project_slug + "/iteration/" + scope.story.iteration_id + "#story_" + scope.story.id;
+      element.on('click', function() {
+        chrome.tabs.create({'url': url});
+      });
+    }
+  };
+});
+
+scrumDont.directive('storyStatus', function(){
+  return {
+    restrict: 'A',
+    template: '<span class="status {{textStatus}}">{{textStatus}}</span>',
+    link: function(scope) {
+      switch(scope.task.status) {
+        case 1: 
+          scope.textStatus = 'to-do';
+          break;
+        case 4: 
+          scope.textStatus = 'doing';
+          break;
+        case 10:
+          scope.textStatus = 'done';
+          break;
+      }
+    }
+  }
+});

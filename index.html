@@ -38,15 +38,17 @@
 
     <div class="card">
 
+      <ul>
+        <li ng-repeat="story in stories">
 
-    <ul>
-      <li ng-repeat="story in stories">
-        {{story.summary}}
-        <ul>
-          <li ng-repeat="task in story.taskArray">{{task.summary}} <strong>{{task.status}}</strong></li>
-        </ul>
-      </li>
-    </ul>
+          <div story-link class="story-link"></div>
+
+          <ul>
+            <li ng-repeat="task in story.taskArray">{{task.summary}}  <span story-status></span> </li>
+          </ul>
+        </li>
+      </ul>
+
     </div>
 
   </div>

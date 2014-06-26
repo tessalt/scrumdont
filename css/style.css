@@ -182,3 +182,26 @@ button:focus {
   20% { width: 20%; }
  100% {left: 95%;}
 }
+
+.story-link {
+  cursor: pointer;
+}
+
+.status {
+  font-size: 12px;
+  padding: 2px 12px;
+  background: #EBEBEB;
+  border-radius: 16px;
+  display: inline-block;
+  margin-left: 1em;
+}
+
+.status.to-do {
+  background: #757575;
+  color: white;
+}
+
+.status.doing {
+  background: #448CCA;
+  color: white;
+}
