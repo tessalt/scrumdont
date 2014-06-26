@@ -10,10 +10,13 @@ angular.module('scrumDont.controllers', []).
 
     $scope.currentProject = localStorage.currentProject !== undefined ? JSON.parse(localStorage.currentProject) : '';
 
+    $scope.optionsSet = false;
+
     $scope.saveOptions = function(currentProject, member) {
       if (member && currentProject) {
         localStorage['member'] = JSON.stringify(member);
         localStorage['currentProject'] = JSON.stringify(currentProject);
+        $scope.optionsSet = true;
       }
     }
 
@@ -26,6 +29,10 @@ angular.module('scrumDont.controllers', []).
     $scope.refresh = function() {
       $scope.stories = [];
       fetchTasks();
+    }
+
+    $scope.options = function() {
+      chrome.tabs.create({'url': chrome.extension.getURL("options.html") } );
     }
 
     function fetchTasks() {

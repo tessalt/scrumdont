@@ -19,17 +19,32 @@
 
   <div ng-controller="ScrumCtrl">
 
-  <paper-button label="flat button"></paper-button>
+   <div class="card card-padding options">
 
-    <select ng-model="currentProject" ng-options="project.name for project in projects"></select>
+      <h1>ScrumDon't Settings</h1>
 
-    <select ng-model="member" ng-options="member.username for member in currentProject.members"></select>
+      <div class="alert alert-success alert-padding" ng-show="optionsSet">
+        <p>Options set.</p>
+      </div>
 
-    <button ng-click="saveOptions(currentProject, member)">Save</button>
+      <p class="form-group">
+        <label for="">Project: {{currentProject.name}}</label>
+        <span class="selectbox">          
+          <select ng-model="currentProject" ng-options="project.name for project in projects">
+          </select>
+        </span>
+      </p>
 
-    <h1>{{currentProject.name}}</h1>
+      <p class="form-group">
+        <label for="">User: {{member.username}}</label>
+        <span class="selectbox">   
+          <select ng-model="member" ng-options="member.username for member in currentProject.members"></select>
+        </span>
+      </p>
 
-    <h1>{{member.username}}</h1>
+      <button ng-click="saveOptions(currentProject, member)">Save</button>
+
+   </div>
 
   </div>
 

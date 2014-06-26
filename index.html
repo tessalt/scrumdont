@@ -21,12 +21,18 @@
 
     <header class="popup-header">
       <h1>ScrumDon't</h1>
-      <img ng-click="refresh()" src="refresh.svg" width="32" height="32">
+      <img ng-click="refresh()" src="refresh.svg" width="24" height="24">
     </header>
 
-    <p ng-hide="currentProject.name">{{'Please select a project'}}</p>
+    <div class="card card-padding alert alert-error" ng-hide="member.username && currentProject.name">
 
-    <p ng-hide="member.username">{{'Please select a user'}}</p>
+      <p ng-hide="currentProject.name">{{'Please select a project'}}</p>
+
+      <p ng-hide="member.username">{{'Please select a user'}}</p>
+
+      <button ng-hide="member.username && currentProject.name" ng-click="options()">Set options</button>
+      
+    </div>
 
     <div class="card">
 
