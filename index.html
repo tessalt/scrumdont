@@ -14,15 +14,15 @@
 
   <button ng-click="getOptions()">test</button>
 
-    <p>{{options.project.name}}</p>
+    <p>Project: {{options.project.name}}</p>
 
     <select ng-model="options.project" ng-options="project.name for project in projects" ng-change="setProject()"></select>
 
-    <p>{{options.user.username}}</p>
+    <p>User: {{options.user.username}}</p>
 
     <select ng-model="options.user" ng-options="user.username for user in options.project.members" ng-change="setUser()"></select>
 
-    <p>{{options.iteration.name}}</p>
+    <p>Iteration: {{options.iteration.name}}</p>
 
     <select ng-model="options.iteration" ng-options="iteration.name for iteration in iterations" ng-change="setIteration()"></select>
 
