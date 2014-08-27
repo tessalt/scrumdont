@@ -10,22 +10,21 @@
 </head>
 <body ng-app="scrumDont">
 
-  <div ng-controller="AppController">
+  <div ng-controller="OptionsController">
 
   <button ng-click="getOptions()">test</button>
 
     <p>Project: {{options.project.name}}</p>
 
-    <select ng-model="options.project" ng-options="project.name for project in projects" ng-change="setProject()"></select>
+    <select ng-model="options.project" ng-options="project.name for project in projects" ng-change="changeProject()"></select>
 
     <p>User: {{options.user.username}}</p>
 
-    <select ng-model="options.user" ng-options="user.username for user in options.project.members" ng-change="setUser()"></select>
+    <select ng-model="options.user" ng-options="user.username for user in options.project.members" ng-change="changeUser()"></select>
 
     <p>Iteration: {{options.iteration.name}}</p>
 
-    <select ng-model="options.iteration" ng-options="iteration.name for iteration in iterations" ng-change="setIteration()"></select>
-
+    <select ng-model="options.iteration" ng-options="iteration.name for iteration in iterations" ng-change="changeIteration()"></select>
 
   </div>
 

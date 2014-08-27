@@ -2,6 +2,11 @@ angular.module('scrumDont.controllers', []).
 
   controller('AppController', function ($scope, projectService, iterationService) {
 
+
+  }).
+
+  controller('OptionsController', function ($scope, projectService, iterationService, optionService) {
+  
     $scope.options = {
       project: JSON.parse(localStorage.getItem('project')) || '',
       user: JSON.parse(localStorage.getItem('user')) || '',
@@ -18,24 +23,26 @@ angular.module('scrumDont.controllers', []).
       });
     }
 
-    $scope.setProject = function() {
-      localStorage.setItem('project', JSON.stringify($scope.options.project));
-      $scope.options.iteration = '';
+    $scope.changeProject = function() {
+      optionService.setOptions({
+        project: $scope.options.project,
+        iteration: ''
+      })
       iterationService.query({slug: $scope.options.project.slug}, function(data){
         $scope.iterations = data;
       });
     }
 
-    $scope.setUser = function() {
-      localStorage.setItem('user', JSON.stringify($scope.options.user));
-    }
+    $scope.changeUser = function(){
+      optionService.setOptions({user: $scope.options.user});
+    } 
 
-    $scope.setIteration = function() {
-      localStorage.setItem('iteration', JSON.stringify($scope.options.iteration));
-    }
+    $scope.changeIteration = function(){
+      optionService.setOptions({iteration: $scope.options.iteration});
+    } 
 
     $scope.getOptions = function() {
-      console.log(JSON.parse(localStorage.getItem('options')));
+      $scope.query = optionService.getQuery()
     }
 
-  });
+  })
