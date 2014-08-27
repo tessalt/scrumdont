@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ScrumDon't 2.0</title>
+  <script src="js/lib/angular.js"></script>
+  <script src="js/lib/angular-resource.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/services.js"></script>
+</head>
+<body ng-app="scrumDont">
+
+  <div ng-controller="AppController">
+
+  <button ng-click="getOptions()">test</button>
+
+    <p>{{options.project.name}}</p>
+
+    <select ng-model="options.project" ng-options="project.name for project in projects" ng-change="setProject()"></select>
+
+    <p>{{options.user.username}}</p>
+
+    <select ng-model="options.user" ng-options="user.username for user in options.project.members" ng-change="setUser()"></select>
+
+    <p>{{options.iteration.name}}</p>
+
+    <select ng-model="options.iteration" ng-options="iteration.name for iteration in iterations" ng-change="setIteration()"></select>
+
+
+  </div>
+
+</body>
+</html>

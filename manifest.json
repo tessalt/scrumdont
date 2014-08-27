@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+  "name": "ScrumDon't 2.0",
+  "description": "Strollin'",
+  "version": "2.0",
+  "options_page": "options.html",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "app":{
+    "launch":{
+      "local_path":"index.html"
+    }
+  },
+  "icons": {
+    "48": "scrumdont_48.png",
+    "128": "scrumdont_128.png"
+  },
+  "permissions":[
+    "webRequest",
+    "webRequestBlocking",
+    "http://*/*",
+    "https://*/*",
+    "storage"
+    ]
+}
