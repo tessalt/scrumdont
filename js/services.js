@@ -10,8 +10,7 @@ angular.module('scrumDont.services', ['ngResource'])
     return $resource(scrumdoUrl + 'projects/:project/iterations/:iteration');
   })
 
-  .factory('storyService', function ($resource) {
-
+  .factory('storyService', function ($resource){
     var resourceConfig = {
       'query': {
         method: 'GET',
@@ -21,20 +20,63 @@ angular.module('scrumDont.services', ['ngResource'])
         isArray: true
       }
     }
+    return $resource(scrumdoUrl + 'projects/:project/stories/:story', {}, resourceConfig);
+  })
 
-    function getAll() {
-      return $resource(scrumdoUrl + 'projects/:project/stories/:story', {}, resourceConfig);
-    }
+  .factory('taskService', function ($resource) {
+    return $resource(scrumdoUrl + 'projects/:project/stories/:story/tasks/:task');
+  })
 
-    function getStories(options) {
-      if (options.user) {
+  .factory('customStoryService', function ($resource, $q, storyService, taskService) {
 
+    function _getTasksForStory(project, story) {
+      var deferred = $q.defer();
+      if (story.task_count > 0) {
+        taskService.query({project: project, story: story.id}, function (tasks){
+          tasks = {
+            tasks: tasks
+          }
+          var storyWithTasks = angular.extend(story, tasks);
+          deferred.resolve(storyWithTasks);
+        });
       } else {
-        return getAll;
+        deferred.resolve({story: story, tasks: ''});
       }
+      return deferred.promise;
     }
 
-    return getStories;
+    function _getStoriesWithTasks(project, fn) {
+      storyService.query({project: project}, function (stories){
+        var promises = [];
+        angular.forEach(stories, function (story){
+          promises.push(_getTasksForStory(project, story));
+        });
+        $q.all(promises).then(function (promiseData){
+          var storyData = promiseData.filter(function(item){
+            return item.tasks.length;
+          });
+          fn(storyData);
+        });
+      });
+    }
+
+    function _getStories(options) {
+      var deferred = $q.defer();
+      if (options.user) {
+        _getStoriesWithTasks(options.project, function (storyData){
+          deferred.resolve({stories: storyData});
+        });
+      } else {
+        storyService.query({project: options.project}, function (data){
+          deferred.resolve({stories: data});
+        });
+      }
+      return deferred.promise;
+    }
+
+    return {
+      getStories: _getStories
+    }
 
   })
 

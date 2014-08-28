@@ -6,7 +6,7 @@ angular.module('scrumDont.controllers', []).
   }).
 
   controller('OptionsController', function ($scope, projectService, iterationService, optionService) {
-  
+
     $scope.options = {
       project: JSON.parse(localStorage.getItem('project')) || '',
       user: JSON.parse(localStorage.getItem('user')) || '',
@@ -39,28 +39,22 @@ angular.module('scrumDont.controllers', []).
     $scope.changeUser = function(){
       optionService.setOptions({user: $scope.options.user});
       $scope.query = optionService.getQuery();
-    } 
+    }
 
     $scope.changeIteration = function(){
       optionService.setOptions({iteration: $scope.options.iteration});
       $scope.query = optionService.getQuery();
-    } 
+    }
 
   }).
 
-  controller('StoriesController', function ($scope, optionService, storyService){
+  controller('StoriesController', function ($scope, optionService, customStoryService){
 
     var query = optionService.getQuery();
 
-    $scope.test = 'test';
-
-    storyService.query({
-      project: query.project,
-      user: query.user
-    }, 
-      function(data){
-      $scope.stories = data;
+    customStoryService.getStories(query).then(function(data){
       console.log(data);
+      $scope.stories = data.stories;
     });
 
   })
