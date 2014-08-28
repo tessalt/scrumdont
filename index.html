@@ -26,6 +26,20 @@
 
     <select ng-model="options.iteration" ng-options="iteration.name for iteration in iterations" ng-change="changeIteration()"></select>
 
+    <pre>{{query}}</pre>
+
+  </div>
+
+  <div ng-controller="StoriesController">
+
+  <!-- {{stories.items}} -->
+
+  <ul>
+    <li ng-repeat="story in stories">
+      {{story.summary}}
+    </li>
+  </ul>
+    
   </div>
 
 </body>
