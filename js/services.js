@@ -29,12 +29,24 @@ angular.module('scrumDont.services', ['ngResource'])
 
   .factory('customStoryService', function ($resource, $q, storyService, taskService) {
 
+    function _getTaskAssignees(tasks) {
+      var assignees = [];
+      angular.forEach(tasks, function(task){
+        if (task.assignee) {
+          assignees.push(task.assignee.username);
+        }
+      });
+      return assignees;
+    }
+
     function _getTasksForStory(project, story) {
       var deferred = $q.defer();
       if (story.task_count > 0) {
         taskService.query({project: project, story: story.id}, function (tasks){
+          var taskAssignees = _getTaskAssignees(tasks);
           tasks = {
-            tasks: tasks
+            tasks: tasks,
+            assignees: taskAssignees
           }
           var storyWithTasks = angular.extend(story, tasks);
           deferred.resolve(storyWithTasks);
@@ -45,17 +57,17 @@ angular.module('scrumDont.services', ['ngResource'])
       return deferred.promise;
     }
 
-    function _getStoriesWithTasks(project, fn) {
+    function _getStoriesWithUser(project, user, fn) {
       storyService.query({project: project}, function (stories){
         var promises = [];
         angular.forEach(stories, function (story){
           promises.push(_getTasksForStory(project, story));
         });
         $q.all(promises).then(function (promiseData){
-          var storyData = promiseData.filter(function(item){
-            return item.tasks.length;
+          var storiesWithTasks = promiseData.filter(function (item){
+            return item.tasks.length && item.assignees.indexOf(user) > -1;
           });
-          fn(storyData);
+          fn(storiesWithTasks);
         });
       });
     }
@@ -63,7 +75,7 @@ angular.module('scrumDont.services', ['ngResource'])
     function _getStories(options) {
       var deferred = $q.defer();
       if (options.user) {
-        _getStoriesWithTasks(options.project, function (storyData){
+        _getStoriesWithUser(options.project, options.user, function (storyData){
           deferred.resolve({stories: storyData});
         });
       } else {
