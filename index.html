@@ -10,9 +10,9 @@
 </head>
 <body ng-app="scrumDont">
 
-  <div ng-controller="OptionsController">
+<div ng-controller="AppController">
 
-  <button ng-click="getOptions()">test</button>
+  <div ng-controller="OptionsController">
 
     <p>Project: {{options.project.name}}</p>
 
@@ -20,21 +20,23 @@
 
     <p>User: {{options.user.username}}</p>
 
-    <select ng-model="options.user" ng-options="user.username for user in options.project.members" ng-change="changeUser()"></select>
+    <select ng-model="options.user" ng-options="user.username for user in options.project.members" ng-change="changeOptions()"></select>
 
     <p>Iteration: {{options.iteration.name}}</p>
 
-    <select ng-model="options.iteration" ng-options="iteration.name for iteration in iterations" ng-change="changeIteration()"></select>
+    <select ng-model="options.iteration" ng-options="iteration.name for iteration in iterations" ng-change="changeOptions()"></select>
 
-    <pre>{{query}}</pre>
 
   </div>
 
   <div ng-controller="StoriesController">
 
-  <!-- {{stories.items}} -->
+    <pre>{{superquery}}</pre>
 
-  {{storiesError}}
+
+{{storiesError}}
+
+
 
   <ul>
     <li ng-repeat="story in stories">
@@ -45,6 +47,7 @@
   </ul>
 
   </div>
+</div>
 
 </body>
 </html>

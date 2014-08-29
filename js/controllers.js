@@ -1,11 +1,10 @@
 angular.module('scrumDont.controllers', []).
 
-  controller('AppController', function ($scope, projectService, iterationService) {
-
+  controller('AppController', function ($scope, optionService) {
 
   }).
 
-  controller('OptionsController', function ($scope, projectService, iterationService, optionService) {
+  controller('OptionsController', function ($rootScope, $scope, projectService, iterationService, optionService) {
 
     $scope.options = {
       project: JSON.parse(localStorage.getItem('project')) || '',
@@ -23,8 +22,6 @@ angular.module('scrumDont.controllers', []).
       });
     }
 
-    $scope.query = optionService.getQuery();
-
     $scope.changeProject = function() {
       optionService.setOptions({
         project: $scope.options.project,
@@ -36,26 +33,31 @@ angular.module('scrumDont.controllers', []).
       $scope.query = optionService.getQuery();
     }
 
-    $scope.changeUser = function(){
-      optionService.setOptions({user: $scope.options.user});
+    $scope.changeOptions = function() {
+      optionService.setOptions({
+        iteration: $scope.options.iteration,
+        user: $scope.options.user
+      });
       $scope.query = optionService.getQuery();
     }
 
-    $scope.changeIteration = function(){
-      optionService.setOptions({iteration: $scope.options.iteration});
-      $scope.query = optionService.getQuery();
-    }
+    $scope.$watch('query', function(){
+      $rootScope.$emit('optionsChanged');
+    });
 
   }).
 
-  controller('StoriesController', function ($scope, optionService, customStoryService){
+  controller('StoriesController', function ($rootScope, $scope, optionService, customStoryService) {
 
-    var query = optionService.getQuery();
-
-    customStoryService.query(query).then(function(data){
-      $scope.stories = data.stories;
-    }, function(error){
-      $scope.storiesError = error;
+    var unbind = $rootScope.$on('optionsChanged', function(){
+      var query = optionService.getQuery();
+      customStoryService.query(query).then(function(data){
+        $scope.stories = data.stories;
+      }, function(error){
+        $scope.storiesError = error;
+      });
     });
+
+    $scope.$on('$destroy', unbind);
 
   })
