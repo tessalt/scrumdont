@@ -21,15 +21,19 @@
     <p>User: {{options.user.username}}</p>
 
     <select ng-model="options.user" ng-options="user.username for user in options.project.members" ng-change="changeOptions()"></select>
+    <button ng-click="clearOptions('user')">clear</button>
 
     <p>Iteration: {{options.iteration.name}}</p>
 
     <select ng-model="options.iteration" ng-options="iteration.name for iteration in iterations" ng-change="changeOptions()"></select>
+    <button ng-click="clearOptions('iteration')">clear</button>
 
 
   </div>
 
   <div ng-controller="StoriesController">
+
+    <h2>{{loading}}</h2>
 
     <pre>{{superquery}}</pre>
 

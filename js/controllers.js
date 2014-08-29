@@ -41,6 +41,14 @@ angular.module('scrumDont.controllers', []).
       $scope.query = optionService.getQuery();
     }
 
+    $scope.clearOptions = function(prop) {
+      var options = {};
+      options[prop] = '';
+      console.log(prop);
+      optionService.setOptions(options);
+      $scope.query = optionService.getQuery();
+    }
+
     $scope.$watch('query', function(){
       $rootScope.$emit('optionsChanged');
     });
@@ -49,12 +57,17 @@ angular.module('scrumDont.controllers', []).
 
   controller('StoriesController', function ($rootScope, $scope, optionService, customStoryService) {
 
+    $scope.loading = 'loading';
+
     var unbind = $rootScope.$on('optionsChanged', function(){
+      $scope.loading = 'loading';
       var query = optionService.getQuery();
       customStoryService.query(query).then(function(data){
         $scope.stories = data.stories;
+        $scope.loading = '';
       }, function(error){
         $scope.storiesError = error;
+        $scope.loading = '';
       });
     });
 
