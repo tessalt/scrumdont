@@ -61,6 +61,7 @@ angular.module('scrumDont.controllers', []).
 
     var unbind = $rootScope.$on('optionsChanged', function(){
       var query = optionService.getQuery();
+      $scope.selectedUser = query.user;
       if (query.project) {
         $scope.message = 'loading';
         customStoryService.query(query).then(function(data){
