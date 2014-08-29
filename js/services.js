@@ -136,18 +136,8 @@ angular.module('scrumDont.services', ['ngResource'])
       }
     }
 
-    function _getQuery() {
-      var options = _getOptions();
-      return {
-        project: options.project.slug,
-        user: options.user.username,
-        iteration: options.iteration.id
-      }
-    }
-
     return {
       setOptions: _setOptions,
-      getOptions: _getOptions,
-      getQuery: _getQuery
+      getOptions: _getOptions
     }
   })

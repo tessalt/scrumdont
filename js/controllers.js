@@ -2,7 +2,6 @@ angular.module('scrumDont.controllers', []).
 
   controller('AppController', function ($scope, optionService) {
     $scope.message = 'Pick a project';
-
   }).
 
   controller('OptionsController', function ($rootScope, $scope, projectService, iterationService, optionService) {
@@ -32,7 +31,7 @@ angular.module('scrumDont.controllers', []).
       iterationService.query({project: $scope.options.project.slug}, function(data){
         $scope.iterations = data;
       });
-      $scope.query = optionService.getQuery();
+      $scope.options = optionService.getOptions();
     }
 
     $scope.changeOptions = function() {
@@ -40,18 +39,17 @@ angular.module('scrumDont.controllers', []).
         iteration: $scope.options.iteration,
         user: $scope.options.user
       });
-      $scope.query = optionService.getQuery();
+      $scope.options = optionService.getOptions();
     }
 
     $scope.clearOptions = function(prop) {
       var options = {};
       options[prop] = '';
-      console.log(prop);
       optionService.setOptions(options);
-      $scope.query = optionService.getQuery();
+      $scope.options = optionService.getOptions();
     }
 
-    $scope.$watch('query', function(){
+    $scope.$watch('options', function(){
       $rootScope.$emit('optionsChanged');
     });
 
@@ -60,7 +58,12 @@ angular.module('scrumDont.controllers', []).
   controller('StoriesController', function ($rootScope, $scope, optionService, customStoryService) {
 
     var unbind = $rootScope.$on('optionsChanged', function(){
-      var query = optionService.getQuery();
+      var options = optionService.getOptions();
+      var query = {
+        project: options.project.slug,
+        iteration: options.iteration.id,
+        user: options.user.username
+      }
       $scope.selectedUser = query.user;
       if (query.project) {
         $scope.message = 'loading';
