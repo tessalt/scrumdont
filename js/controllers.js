@@ -54,6 +54,7 @@ angular.module('scrumDont.controllers', []).
 
     customStoryService.getStories(query).then(function(data){
       $scope.stories = data.stories;
+      console.log(data);
     });
 
   })
