@@ -1,6 +1,7 @@
 angular.module('scrumDont.controllers', []).
 
   controller('AppController', function ($scope, optionService) {
+    $scope.message = 'Pick a project';
 
   }).
 
@@ -17,6 +18,7 @@ angular.module('scrumDont.controllers', []).
     });
 
     if ($scope.options.project) {
+      // $scope.message = '';
       iterationService.query({project: $scope.options.project.slug}, function(data){
         $scope.iterations = data;
       });
@@ -57,18 +59,18 @@ angular.module('scrumDont.controllers', []).
 
   controller('StoriesController', function ($rootScope, $scope, optionService, customStoryService) {
 
-    $scope.loading = 'loading';
-
     var unbind = $rootScope.$on('optionsChanged', function(){
-      $scope.loading = 'loading';
       var query = optionService.getQuery();
-      customStoryService.query(query).then(function(data){
-        $scope.stories = data.stories;
-        $scope.loading = '';
-      }, function(error){
-        $scope.storiesError = error;
-        $scope.loading = '';
-      });
+      if (query.project) {
+        $scope.message = 'loading';
+        customStoryService.query(query).then(function(data){
+          $scope.stories = data.stories;
+          $scope.message = '';
+        }, function(error){
+          $scope.stories = [];
+          $scope.message = error;
+        });
+      }
     });
 
     $scope.$on('$destroy', unbind);
