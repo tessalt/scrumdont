@@ -52,9 +52,10 @@ angular.module('scrumDont.controllers', []).
 
     var query = optionService.getQuery();
 
-    customStoryService.getStories(query).then(function(data){
+    customStoryService.query(query).then(function(data){
       $scope.stories = data.stories;
-      console.log(data);
+    }, function(error){
+      $scope.storiesError = error;
     });
 
   })

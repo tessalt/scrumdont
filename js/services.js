@@ -92,18 +92,26 @@ angular.module('scrumDont.services', ['ngResource'])
       var storyResource = _getStoryResource(options);
       if (options.user) {
         _getStoriesForUser(options, function (storyData){
-          deferred.resolve({stories: storyData});
+          if (storyData.length) {
+            deferred.resolve({stories: storyData});
+          } else {
+            deferred.reject('no stories');
+          }
         });
       } else {
-        storyResource.query(options, function (data){
-          deferred.resolve({stories: data});
+        storyResource.query(options, function (storyData){
+          if (storyData.length) {
+            deferred.resolve({stories: storyData});
+          } else {
+            deferred.reject('no stories');
+          }
         });
       }
       return deferred.promise;
     }
 
     return {
-      getStories: _getStories
+      query: _getStories
     }
 
   })
