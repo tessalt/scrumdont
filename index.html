@@ -2,57 +2,58 @@
 <html>
 <head>
   <title>ScrumDon't 2.0</title>
+  <link rel="stylesheet" href="css/style.css">
   <script src="js/lib/angular.js"></script>
   <script src="js/lib/angular-resource.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/slideables.js"></script>
   <script src="js/controllers.js"></script>
   <script src="js/services.js"></script>
 </head>
 <body ng-app="scrumDont">
 
-<div ng-controller="AppController">
+  <div ng-controller="AppController">
 
-  <div ng-controller="OptionsController">
+    <div ng-controller="OptionsController">
 
-    <p>Project: {{options.project.name}}</p>
+      <option-selector model="options.user" items="options.project.members"></option-selector>
 
-    <select ng-model="options.project" ng-options="project.name for project in projects" ng-change="changeProject()"></select>
+      <p>Project: {{options.project.name}}</p>
 
-    <p>User: {{options.user.username}}</p>
-
-    <select ng-model="options.user" ng-options="user.username for user in options.project.members" ng-change="changeOptions()"></select>
-    <button ng-click="clearOptions('user')">clear</button>
-
-    <p>Iteration: {{options.iteration.name}}</p>
-
-    <select ng-model="options.iteration" ng-options="iteration.name for iteration in iterations" ng-change="changeOptions()"></select>
-    <button ng-click="clearOptions('iteration')">clear</button>
+      <select ng-model="options.project" ng-options="project.name for project in projects" ng-change="changeProject()"></select>
 
 
+      <p>User: {{options.user.name}}</p>
+
+      <select ng-model="options.user" ng-options="user.name for user in options.project.members" ng-change="changeOptions()"></select>
+      <button ng-click="clearOptions('user')">clear</button>
+
+      <p>Iteration: {{options.iteration.name}}</p>
+
+      <select ng-model="options.iteration" ng-options="iteration.name for iteration in iterations" ng-change="changeOptions()"></select>
+      <button ng-click="clearOptions('iteration')">clear</button>
+
+    </div>
+
+    <div ng-controller="StoriesController">
+
+      <h2>{{message}}</h2>
+
+      <ul>
+        <li ng-repeat="story in stories">
+          {{story.summary}}
+          <strong>{{story.task_count}}</strong>
+          <ul>
+            <li ng-repeat="task in story.tasks | filter: {assignee.name: selectedUser}">
+              {{task.summary}}
+              <strong>{{task.assignee.name}}</strong>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+    </div>
   </div>
-
-  <div ng-controller="StoriesController">
-
-
-    <h2>{{message}}</h2>
-
-    <ul>
-      <li ng-repeat="story in stories">
-        {{story.summary}}
-        <strong>{{story.task_count}}</strong>
-
-        <ul>
-          <li ng-repeat="task in story.tasks | filter: {assignee.username: selectedUser}">
-            {{task.summary}}
-            <strong>{{task.assignee.username}}</strong>
-          </li>
-        </ul>
-
-      </li>
-    </ul>
-
-  </div>
-</div>
 
 </body>
 </html>
