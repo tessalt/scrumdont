@@ -25,9 +25,9 @@ app.directive('slideable', function () {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
-            var target = document.querySelector(attrs.slideToggle);
-            attrs.expanded = false;
             element.bind('click', function() {
+                var target = document.querySelector(attrs.slideToggle);
+                attrs.expanded = false;
                 var content = target.querySelector('.slideable_content');
                 if(!attrs.expanded) {
                     content.style.border = '1px solid rgba(0,0,0,0)';

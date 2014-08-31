@@ -4,18 +4,16 @@ app.directive('optionSelector', function() {
   return {
     restrict: 'EA',
     scope: {
+      title: '@',
       items: '=',
-      model: '='
+      model: '=',
+      selected: '&onSelected'
     },
     templateUrl: 'js/templates/option-selector.html',
     link: function(scope, element) {
-      scope.chooseItem = function(){
-        scope.model = this.item;
-        angular.element(element[0].getElementsByTagName('ul')).css({
-          'overflow': 'hidden',
-          'height': '0px',
-          'transitionProperty': 'height',
-        });
+      scope.chooseItem = function(item){
+        scope.model = item;
+        // scope.$apply();
       }
     }
   }

@@ -16,17 +16,19 @@
 
     <div ng-controller="OptionsController">
 
-      <option-selector model="options.user" items="options.project.members"></option-selector>
+      <h2>{{options.user}}</h2>
+
+      <!-- <option-selector title="user" model="options.user" items="options.project.members" on-selected="changeOptions()"></option-selector> -->
+      <!-- <option-selector title="iteration" model="options.iteration" items="iterations"></option-selector> -->
 
       <p>Project: {{options.project.name}}</p>
 
-      <select ng-model="options.project" ng-options="project.name for project in projects" ng-change="changeProject()"></select>
+      <select ng-model="options.project" ng-options="project.name for project in projects" ng-change="changeOptions('project')"></select>
 
-
-      <p>User: {{options.user.name}}</p>
-
-      <select ng-model="options.user" ng-options="user.name for user in options.project.members" ng-change="changeOptions()"></select>
+      <p>User: {{options.user.username}}</p>
+      <select ng-model="options.user" ng-options="user.username for user in options.project.members" ng-change="changeOptions()"></select>
       <button ng-click="clearOptions('user')">clear</button>
+
 
       <p>Iteration: {{options.iteration.name}}</p>
 

@@ -1,4 +1,5 @@
-<a slide-toggle="#selector" ng-click="showItems()">{{model.name}}</a>
-<ul id="selector" class="slideable" duration=".5s">
-  <li ng-repeat="item in items" ng-click="chooseItem()" >{{item.name}}</li>
+<h2>{{title}}: {{model.name}}</h2>
+
+<ul>
+  <li ng-repeat="item in items" ng-click="chooseItem(item)">{{item.name}}</li>
 </ul>

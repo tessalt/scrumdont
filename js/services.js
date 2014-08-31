@@ -143,6 +143,8 @@ angular.module('scrumDont.services', ['ngResource'])
         }
       }
 
+      return _getOptions();
+
     }
 
     function _getOptions() {

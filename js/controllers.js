@@ -12,52 +12,42 @@ angular.module('scrumDont.controllers', []).
       iteration: JSON.parse(localStorage.getItem('iteration')) || ''
     }
 
-    projectService.query(function(data){
-      $scope.projects = data;
-    });
+    $scope.projects = projectService.query();
 
     if ($scope.options.project) {
-      // $scope.message = '';
-      iterationService.query({project: $scope.options.project.slug}, function(data){
-        $scope.iterations = data;
-      });
+      $scope.iterations = iterationService.query({project: $scope.options.project.slug});
     }
 
-    $scope.changeProject = function() {
-      optionService.setOptions({
-        project: $scope.options.project,
-        iteration: ''
-      })
-      iterationService.query({project: $scope.options.project.slug}, function(data){
-        $scope.iterations = data;
-      });
-      $scope.options = optionService.getOptions();
-    }
-
-    $scope.changeOptions = function() {
-      optionService.setOptions({
-        iteration: $scope.options.iteration,
-        user: $scope.options.user
-      });
-      $scope.options = optionService.getOptions();
+    $scope.changeOptions = function(model) {
+      if (model === 'project') {
+        $scope.options.iteration = '';
+      }
+      $scope.options = optionService.setOptions($scope.options);
+      $rootScope.$emit('optionsChanged');
     }
 
     $scope.clearOptions = function(prop) {
       var options = {};
       options[prop] = '';
-      optionService.setOptions(options);
-      $scope.options = optionService.getOptions();
+      $scope.options = optionService.setOptions(options);
+      $rootScope.$emit('optionsChanged');
     }
 
-    $scope.$watch('options', function(){
-      $rootScope.$emit('optionsChanged');
+    $scope.$watch('options.project', function(){
+      $scope.iterations = iterationService.query({project: $scope.options.project.slug});
     });
 
   }).
 
   controller('StoriesController', function ($rootScope, $scope, optionService, customStoryService) {
 
+    _showStories();
+
     var unbind = $rootScope.$on('optionsChanged', function(){
+      _showStories()
+    });
+
+    function _showStories() {
       var options = optionService.getOptions();
       var query = {
         project: options.project.slug,
@@ -75,7 +65,7 @@ angular.module('scrumDont.controllers', []).
           $scope.message = error;
         });
       }
-    });
+    }
 
     $scope.$on('$destroy', unbind);
 
