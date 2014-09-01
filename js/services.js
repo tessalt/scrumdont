@@ -58,7 +58,8 @@ angular.module('scrumDont.services', ['ngResource'])
             var story = {
               id: item.id,
               summary: item.summary,
-              task_count: item.task_count
+              task_count: item.task_count,
+              number: item.number
             }
             return story;
           });
@@ -80,7 +81,8 @@ angular.module('scrumDont.services', ['ngResource'])
             var story = {
               id: item.id,
               summary: item.summary,
-              task_count: item.task_count
+              task_count: item.task_count,
+              number: item.number
             }
             return story;
           });

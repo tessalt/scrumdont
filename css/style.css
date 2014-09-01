@@ -58,9 +58,25 @@ a {
 }
 
 .story {
-  padding: 16px;
+  padding: 16px 16px 16px 0;
   line-height: 1.4;
   border-bottom: 1px solid #E6E6E6;
+  overflow: hidden;
+}
+
+.story-number {
+  font-size: 42px;
+  width: 100px;
+  float: left;
+  text-align: center;
+  line-height: 1;
+  padding: 0 16px;
+  color: #536dfe;
+}
+
+.story-contents {
+  float: left;
+  width: calc(100% - 100px);
 }
 
 .task {
