@@ -8,9 +8,13 @@ angular.module('scrumDont.services', ['ngResource'])
         method: 'GET',
         transformResponse: function(data) {
           var transformed = angular.fromJson(data).map(function(item){
+            var _members = item.members.map(function(member){
+              member.name = member.username;
+              return member;
+            });
             var project = {
               id: item.id,
-              members: item.members,
+              members: _members,
               name: item.name,
               slug: item.slug,
               url: item.url
@@ -72,7 +76,7 @@ angular.module('scrumDont.services', ['ngResource'])
       'query': {
         method: 'GET',
         transformResponse: function(data) {
-          var items = angular.fromJson(data).items.map(function(item){
+          var items = angular.fromJson(data).map(function(item){
             var story = {
               id: item.id,
               summary: item.summary,
