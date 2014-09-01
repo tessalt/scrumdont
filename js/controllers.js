@@ -64,41 +64,4 @@ angular.module('scrumDont.controllers', []).
 
     $scope.$on('$destroy', unbind);
 
-  }).
-
-  controller('TestController', function ($scope, optionService) {
-
-    $scope.members = [
-      {
-        "name": "Jack O'Neill",
-        "rank": "Colonel",
-        "gender": "male",
-        "species": "human"
-      },
-      {
-        "name": "Samantha Carter",
-        "rank": "Major",
-        "gender": "Female",
-        "species": "Human"
-      },
-      {
-        "name": "Daniel Jackson",
-        "rank": "Civilian",
-        "gender": "Male",
-        "species": "Human"
-      },
-      {
-        "name": "Teal'c",
-        "rank": "Civilian",
-        "gender": "Male",
-        "species": "Jaffa"
-      }
-    ];
-
-    $scope.member = $scope.members[0];
-
-    $scope.memberPicked = function() {
-      console.log($scope.member);
-    }
-
   })
