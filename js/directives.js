@@ -39,3 +39,28 @@ app.directive('optionSelector', function ($document) {
     }
   }
 });
+
+app.directive('storyLink', function ($document) {
+  return {
+    restrict: 'E',
+    templateUrl: 'js/templates/story-link.html',
+    scope: {
+      story: '=',
+      statuses: '=',
+      user: '@'
+    },
+    link: function(scope) {
+      // console.log(scope.statuses[scope.story.status - 1]);
+    },
+    controller: function($scope) {
+      $scope.openStory = function() {
+        var url = 'https://www.scrumdo.com/projects/project/' +
+                  $scope.story.project_slug + '/iteration/' +
+                  $scope.story.iteration_id + '#story_' +
+                  $scope.story.id;
+        chrome.tabs.create({'url': url});
+      }
+      $scope.colors = ['red', 'pink', 'purple', 'indigo', 'teal', 'light-green', 'yellow', 'orange', 'deep-orange', 'brown', 'blue-grey'];
+    }
+  }
+});

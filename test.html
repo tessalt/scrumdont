@@ -28,6 +28,17 @@
 
 </div>
 
+<div class="stories" ng-controller="TestController">
+
+    <ul class="stories-list">
+
+    <li ng-repeat="story in stories">
+      <story-link story="story" status="{{}}"></story-link>
+    </li>
+
+    </ul>
+
+  </div>
 
 </body>
 </html>

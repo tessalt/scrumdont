@@ -17,7 +17,8 @@ angular.module('scrumDont.services', ['ngResource'])
               members: _members,
               name: item.name,
               slug: item.slug,
-              url: item.url
+              url: item.url,
+              statuses: item.statuses
             }
             return project;
           });
@@ -59,7 +60,10 @@ angular.module('scrumDont.services', ['ngResource'])
               id: item.id,
               summary: item.summary,
               task_count: item.task_count,
-              number: item.number
+              number: item.number,
+              status: item.status,
+              iteration_id: item.iteration_id,
+              project_slug: item.project_slug
             }
             return story;
           });
@@ -82,7 +86,10 @@ angular.module('scrumDont.services', ['ngResource'])
               id: item.id,
               summary: item.summary,
               task_count: item.task_count,
-              number: item.number
+              number: item.number,
+              status: item.status,
+              iteration_id: item.iteration_id,
+              project_slug: item.project_slug
             }
             return story;
           });

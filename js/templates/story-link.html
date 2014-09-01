@@ -1,0 +1,13 @@
+<a class="story" ng-click="openStory()">
+  <div class="story-number {{story.number > 99 ? 'big-number' : ''}}">
+    {{story.number}}
+  </div>
+  <div class="story-contents">
+    <h2 class="story-contents-primary">{{story.summary}} <small class="story-status status-{{colors[story.status]}}">{{statuses[story.status - 1]}}</small></h2>
+    <ul class="task-list story-contents-secondary">
+      <li class="task" ng-repeat="task in story.tasks | filter: {assignee.username : user}">{{task.summary}}
+        <small class="task-status status-{{colors[task.status]}}">{{statuses[task.status - 1]}}</small>
+      </li>
+    </ul>
+  </div>
+</a>

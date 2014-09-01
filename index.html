@@ -53,18 +53,8 @@
       <h2>{{message}}</h2>
 
       <ul class="stories-list">
-        <li ng-repeat="story in stories" class="story">
-          <div class="story-number">
-            {{story.number}}
-          </div>
-          <div class="story-contents">
-            {{story.summary}}
-            <ul>
-              <li class="task" ng-repeat="task in story.tasks | filter: {assignee.username: selectedUser}">
-                {{task.summary}}
-              </li>
-            </ul>
-          </div>
+        <li ng-repeat="story in stories">
+          <story-link story="story" statuses="statuses" user="{{selectedUser}}"></story-link>
         </li>
       </ul>
 
