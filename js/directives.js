@@ -25,12 +25,16 @@ app.directive('optionSelector', function ($document) {
       }
       $scope.selectItem = function(item) {
         $scope.model[$scope.attribute] = item;
+        $scope.query = item.name;
         $scope.showOptions = false;
         $scope.change();
       }
       $scope.clearSelection = function() {
         $scope.model[$scope.attribute] = '';
         $scope.change();
+      }
+      $scope.clearInput = function() {
+        $scope.query = '';
       }
     }
   }

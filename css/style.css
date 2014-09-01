@@ -124,7 +124,11 @@ a {
   font-size: 16px;
 }
 
-.option-selector-toggle:after {
+.option-selector-toggle:focus {
+  outline: none;
+}
+
+.indicator-arrow {
   content: "";
   width: 0;
   height: 0;
@@ -134,6 +138,11 @@ a {
   position: absolute;
   right: 16px;
   top: 22px;
+}
+
+.option-selector.open .indicator-arrow {
+  border-width: 0 5px 5px 5px;
+  border-color: transparent transparent #444 transparent;
 }
 
 .option-selector-options {

@@ -1,7 +1,14 @@
 <div class="option-selector" ng-class="showOptions ? 'open' : '' ">
-  <a class="option-selector-toggle" ng-click="toggleOptions()">{{model[attribute].name || 'Select ' + attribute}} </a>
+  <input
+    type="text"
+    ng-model="query"
+    ng-focus="clearInput()"
+    ng-click="toggleOptions()"
+    class="option-selector-toggle"
+    placeholder="{{model[attribute].name || 'Select ' + attribute}}" />
+  <span class="indicator-arrow"></span>
   <ul class="option-selector-options" ng-show="showOptions">
     <li ng-click="clearSelection()">&nbsp;</li>
-    <li ng-repeat="item in collection" ng-click="selectItem(item)">{{item.name}}</li>
+    <li ng-repeat="item in collection | filter:query" ng-click="selectItem(item)">{{item.name}}</li>
   </ul>
 </div>
