@@ -3,11 +3,46 @@ var scrumdoUrl = 'https://www.scrumdo.com/api/v2/organizations/telus3/';
 angular.module('scrumDont.services', ['ngResource'])
 
   .factory('projectService', function ($resource){
-    return $resource(scrumdoUrl + 'projects/:project');
+    var resourceConfig = {
+      'query': {
+        method: 'GET',
+        transformResponse: function(data) {
+          var transformed = angular.fromJson(data).map(function(item){
+            var project = {
+              id: item.id,
+              members: item.members,
+              name: item.name,
+              slug: item.slug,
+              url: item.url
+            }
+            return project;
+          });
+          return transformed;
+        },
+        isArray: true
+      }
+    }
+    return $resource(scrumdoUrl + 'projects/:project', {}, resourceConfig);
   })
 
   .factory('iterationService', function ($resource) {
-    return $resource(scrumdoUrl + 'projects/:project/iterations/:iteration');
+    var resourceConfig = {
+      'query': {
+        method: 'GET',
+        transformResponse: function(data) {
+          var transformed = angular.fromJson(data).map(function(item){
+            var iteration = {
+              id: item.id,
+              name: item.name
+            }
+            return iteration;
+          });
+          return transformed;
+        },
+        isArray: true
+      }
+    }
+    return $resource(scrumdoUrl + 'projects/:project/iterations/:iteration', {}, resourceConfig);
   })
 
   .factory('storyService', function ($resource){
@@ -15,7 +50,15 @@ angular.module('scrumDont.services', ['ngResource'])
       'query': {
         method: 'GET',
         transformResponse: function(data) {
-          return angular.fromJson(data).items;
+          var items = angular.fromJson(data).items.map(function(item){
+            var story = {
+              id: item.id,
+              summary: item.summary,
+              task_count: item.task_count
+            }
+            return story;
+          });
+          return items;
         },
         isArray: true
       }
@@ -25,7 +68,24 @@ angular.module('scrumDont.services', ['ngResource'])
   })
 
   .factory('iterationStoryService', function ($resource){
-    return $resource(scrumdoUrl + 'projects/:project/iterations/:iteration/stories/:story');
+    var resourceConfig = {
+      'query': {
+        method: 'GET',
+        transformResponse: function(data) {
+          var items = angular.fromJson(data).items.map(function(item){
+            var story = {
+              id: item.id,
+              summary: item.summary,
+              task_count: item.task_count
+            }
+            return story;
+          });
+          return items;
+        },
+        isArray: true
+      }
+    }
+    return $resource(scrumdoUrl + 'projects/:project/iterations/:iteration/stories/:story', {}, resourceConfig);
   })
 
 
