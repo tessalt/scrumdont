@@ -16,9 +16,15 @@
 
 <div ng-controller="TestController">
 
-  <h1>{{member.name}}</h1>
+  <h1>{{option.member.name}}</h1>
 
-  <option-selector title="member" model="member" collection="members" action="memberPicked()"></option-selector>
+  <option-selector
+        title="member"
+        model="options"
+        attribute="member"
+        collection="members"
+        change="memberPicked()">
+      </option-selector>
 
 </div>
 

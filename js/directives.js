@@ -1,4 +1,4 @@
-app.directive('optionSelector', function() {
+app.directive('optionSelector', function ($document) {
   return {
     restrict: 'E',
     templateUrl: 'js/templates/option-selector.html',
@@ -8,6 +8,16 @@ app.directive('optionSelector', function() {
       collection: '=',
       change: '&',
       attribute: '@'
+    },
+    link: function(scope, element) {
+      $document.on('click', function(e){
+        var el = element[0];
+        if (!el.contains(e.target)) {
+          scope.$apply(function(){
+            scope.showOptions = false;
+          });
+        }
+      })
     },
     controller: function($scope) {
       $scope.toggleOptions = function() {
