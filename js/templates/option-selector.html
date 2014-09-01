@@ -5,10 +5,10 @@
     ng-focus="clearInput()"
     ng-click="toggleOptions()"
     class="option-selector-toggle"
-    placeholder="{{model[attribute].name || 'Select ' + attribute}}" />
+    placeholder="{{model[attribute].name || model[attribute] || 'Select ' + attribute}}" />
   <span class="indicator-arrow"></span>
   <ul class="option-selector-options" ng-show="showOptions">
     <li ng-click="clearSelection()">&nbsp;</li>
-    <li ng-repeat="item in collection | filter:query" ng-click="selectItem(item)">{{item.name}}</li>
+    <li ng-repeat="item in collection | filter:query track by $index" ng-click="selectItem(item)" ng-show="item">{{item.name || item}}</li>
   </ul>
 </div>

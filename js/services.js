@@ -207,12 +207,20 @@ angular.module('scrumDont.services', ['ngResource'])
       return {
         project: JSON.parse(localStorage.getItem('project')) || '',
         user: JSON.parse(localStorage.getItem('user')) || '',
-        iteration: JSON.parse(localStorage.getItem('iteration')) || ''
+        iteration: JSON.parse(localStorage.getItem('iteration')) || '',
+        status: JSON.parse(localStorage.getItem('status')) || ''
+      }
+    }
+
+    function _getFilters() {
+      return {
+        status: JSON.parse(localStorage.getItem('status')) || ''
       }
     }
 
     return {
       setOptions: _setOptions,
-      getOptions: _getOptions
+      getOptions: _getOptions,
+      getFilters: _getFilters
     }
   })

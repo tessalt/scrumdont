@@ -28,6 +28,11 @@ angular.module('scrumDont.controllers', []).
       $rootScope.$emit('optionsChanged');
     }
 
+    $scope.changeFilter = function() {
+      $scope.options = optionService.setOptions($scope.options);
+      $rootScope.$emit('filtersChanged');
+    }
+
     $scope.$watch('options.project',function(change){
       if ($scope.project) {
         $scope.iterations = iterationService.query({project: $scope.options.project.slug});
@@ -38,35 +43,55 @@ angular.module('scrumDont.controllers', []).
 
   controller('StoriesController', function ($rootScope, $scope, optionService, customStoryService) {
 
+    $scope.filters = {};
+
     _showStories();
 
-    var unbind = $rootScope.$on('optionsChanged', function(){
+    var watchOptions = $rootScope.$on('optionsChanged', function(){
       _showStories()
+    });
+
+    var watchFilters = $rootScope.$on('filtersChanged', function(){
+      var options = optionService.getOptions();
+      if (options.status) {
+        $scope.filters.status = options.project.statuses.indexOf(options.status) + 1;
+      } else {
+        $scope.filters.status = '';
+      }
+      console.log($scope.filters.status);
     });
 
     function _showStories() {
       var options = optionService.getOptions();
-      var query = {
-        project: options.project.slug,
-        iteration: options.iteration.id,
-        user: options.user.name
-      }
-      $scope.selectedUser = query.user;
-      $scope.statuses = options.project.statuses;
-      if (query.project) {
-        $scope.message = '';
-        $scope.loading = true;
-        customStoryService.query(query).then(function(data){
-          $scope.stories = data.stories;
-          $scope.loading = false;
-        }, function(error){
-          $scope.stories = [];
-          $scope.message = error;
-          $scope.loading = false;
-        });
+      if (options.project) {
+        var query = {
+          project: options.project.slug,
+          iteration: options.iteration.id,
+          user: options.user.name
+        }
+        $scope.selectedUser = query.user;
+        $scope.statuses = options.project.statuses;
+        if (options.status) {
+          $scope.filters.status = options.project.statuses.indexOf(options.status) + 1;
+        }
+        if (query.project) {
+          $scope.message = '';
+          $scope.loading = true;
+          customStoryService.query(query).then(function(data){
+            $scope.stories = data.stories;
+            $scope.loading = false;
+          }, function(error){
+            $scope.stories = [];
+            $scope.message = error;
+            $scope.loading = false;
+          });
+        }
       }
     }
 
-    $scope.$on('$destroy', unbind);
+    $scope.$on('$destroy', function(){
+      watchOptions();
+      watchFilters();
+    });
 
   })

@@ -7,7 +7,7 @@
   <script src="js/lib/angular.js"></script>
   <script src="js/lib/angular-resource.js"></script>
   <script src="js/app.js"></script>
-  <script src="js/slideables.js"></script>
+  <script src="js/filters.js"></script>
   <script src="js/controllers.js"></script>
   <script src="js/services.js"></script>
   <script src="js/directives.js"></script>
@@ -46,21 +46,30 @@
         change="changeOptions()">
       </option-selector>
 
+      <option-selector
+        title="status"
+        model="options",
+        attribute="status",
+        collection="options.project.statuses"
+        change="changeFilter()">
+      </option-selector>
+
     </div>
 
     <div class="stories" ng-controller="StoriesController">
 
       <div class="loading" ng-show="loading"></div>
 
-      <div class="message" ng-show="message.length > 0">{{message}}</div>
+      <div class="message" ng-show="message">{{message}}</div>
 
       <ul class="stories-list">
-        <li ng-repeat="story in stories">
+        <li ng-repeat="story in stories | filter: {status: filters.status}:true">
           <story-link story="story" statuses="statuses" user="{{selectedUser}}"></story-link>
         </li>
       </ul>
 
     </div>
+
   </div>
 
 </body>
