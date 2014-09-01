@@ -16,7 +16,10 @@ app.directive('optionSelector', function() {
       $scope.selectItem = function(item) {
         $scope.model[$scope.attribute] = item;
         $scope.showOptions = false;
-        // console.log($scope.model);
+        $scope.change();
+      }
+      $scope.clearSelection = function() {
+        $scope.model[$scope.attribute] = '';
         $scope.change();
       }
     }

@@ -1,4 +1,5 @@
 <div ng-click="toggleOptions()">{{title}}: {{model[attribute].name}} </div>
+<div><button ng-click="clearSelection()">Clear</button></div>
 
 <ul class="option-selector-options" ng-show="showOptions">
   <li ng-repeat="item in collection" ng-click="selectItem(item)">{{item.name}}</li>
