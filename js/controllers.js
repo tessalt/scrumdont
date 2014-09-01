@@ -6,11 +6,7 @@ angular.module('scrumDont.controllers', []).
 
   controller('OptionsController', function ($rootScope, $scope, projectService, iterationService, optionService) {
 
-    $scope.options = {
-      project: JSON.parse(localStorage.getItem('project')) || '',
-      user: JSON.parse(localStorage.getItem('user')) || '',
-      iteration: JSON.parse(localStorage.getItem('iteration')) || ''
-    }
+    $scope.options = optionService.getOptions();
 
     $scope.projects = projectService.query();
 
@@ -33,9 +29,9 @@ angular.module('scrumDont.controllers', []).
       $rootScope.$emit('optionsChanged');
     }
 
-    $scope.$watch('options.project', function(){
+    $scope.$watch('options.project',function(change){
       $scope.iterations = iterationService.query({project: $scope.options.project.slug});
-    });
+    }, true);
 
   }).
 

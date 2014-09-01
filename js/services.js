@@ -3,24 +3,7 @@ var scrumdoUrl = 'https://www.scrumdo.com/api/v2/organizations/telus3/';
 angular.module('scrumDont.services', ['ngResource'])
 
   .factory('projectService', function ($resource){
-    var resourceConfig = {
-      'query': {
-        method: 'GET',
-        transformResponse: function(data) {
-          var transformed = angular.fromJson(data).map(function(item){
-            var transformedMembers = item.members.map(function(member){
-              member.name = member.username;
-              return member;
-            });
-            item.members = transformedMembers;
-            return item;
-          });
-          return transformed;
-        },
-        isArray: true
-      }
-    }
-    return $resource(scrumdoUrl + 'projects/:project', {}, resourceConfig);
+    return $resource(scrumdoUrl + 'projects/:project');
   })
 
   .factory('iterationService', function ($resource) {
