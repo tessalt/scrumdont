@@ -63,7 +63,7 @@
       <div class="message" ng-show="message">{{message}}</div>
 
       <ul class="stories-list">
-        <li ng-repeat="story in stories | filter: {status: filters.status}:true">
+        <li ng-repeat="story in stories | filter: {status: filters.status}:exceptEmptyComparator">
           <story-link story="story" statuses="statuses" user="{{selectedUser}}"></story-link>
         </li>
       </ul>

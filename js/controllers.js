@@ -33,8 +33,8 @@ angular.module('scrumDont.controllers', []).
       $rootScope.$emit('filtersChanged');
     }
 
-    $scope.$watch('options.project',function(change){
-      if ($scope.project) {
+    $scope.$watch('options.project',function(){
+      if ($scope.options.project) {
         $scope.iterations = iterationService.query({project: $scope.options.project.slug});
       }
     }, true);
@@ -42,6 +42,13 @@ angular.module('scrumDont.controllers', []).
   }).
 
   controller('StoriesController', function ($rootScope, $scope, optionService, customStoryService) {
+
+    $scope.exceptEmptyComparator = function (actual, expected) {
+      if (!expected) {
+         return true;
+      }
+      return angular.equals(expected, actual);
+    }
 
     $scope.filters = {};
 
@@ -58,7 +65,6 @@ angular.module('scrumDont.controllers', []).
       } else {
         $scope.filters.status = '';
       }
-      console.log($scope.filters.status);
     });
 
     function _showStories() {
