@@ -3,16 +3,18 @@
   "name": "ScrumDon't 2.0",
   "description": "Strollin'",
   "version": "2.0",
-  "options_page": "options.html",
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-  "app":{
-    "launch":{
-      "local_path":"index.html"
+  "browser_action": {
+    "default_icon": {
+      "19": "scrumdont_48.png"
     }
   },
   "icons": {
     "48": "scrumdont_48.png",
     "128": "scrumdont_128.png"
+  },
+   "background": {
+    "scripts": ["js/eventpage.js"]
   },
   "permissions":[
     "webRequest",

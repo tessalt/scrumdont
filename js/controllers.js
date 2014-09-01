@@ -43,16 +43,21 @@ angular.module('scrumDont.controllers', []).
 
   controller('StoriesController', function ($rootScope, $scope, optionService, customStoryService) {
 
+    $scope.filters = {};
+
+    _showStories();
+
+    $scope.$on('$destroy', function(){
+      watchOptions();
+      watchFilters();
+    });
+
     $scope.exceptEmptyComparator = function (actual, expected) {
       if (!expected) {
          return true;
       }
       return angular.equals(expected, actual);
     }
-
-    $scope.filters = {};
-
-    _showStories();
 
     var watchOptions = $rootScope.$on('optionsChanged', function(){
       _showStories()
@@ -94,10 +99,5 @@ angular.module('scrumDont.controllers', []).
         }
       }
     }
-
-    $scope.$on('$destroy', function(){
-      watchOptions();
-      watchFilters();
-    });
 
   })
