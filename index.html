@@ -50,7 +50,9 @@
 
     <div class="stories" ng-controller="StoriesController">
 
-      <h2>{{message}}</h2>
+      <div class="loading" ng-show="loading"></div>
+
+      <div class="message" ng-show="message.length > 0">{{message}}</div>
 
       <ul class="stories-list">
         <li ng-repeat="story in stories">

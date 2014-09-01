@@ -31,6 +31,7 @@ app.directive('optionSelector', function ($document) {
       }
       $scope.clearSelection = function() {
         $scope.model[$scope.attribute] = '';
+        $scope.showOptions = false;
         $scope.change();
       }
       $scope.clearInput = function() {
