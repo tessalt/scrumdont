@@ -22,7 +22,7 @@
 
 body {
   font-family: 'roboto';
-  background: #E5E5E5;
+  background: #F9F9F9;
   color: rgba(0, 0, 0, 0.87);
 }
 
@@ -37,12 +37,45 @@ a {
   color: #444444;
 }
 
-/* option-selector directive */
+.app-header {
+  background: #3f51b5;
+  padding: 32px 16px;
+  color: white;
+}
 
 .options {
   font-size: 0;
   background: #fff;
+  border-bottom: 1px solid #E6E6E6;
 }
+
+.stories {
+  padding: 8px 0;
+}
+
+.stories-list {
+  list-style: none;
+}
+
+.story {
+  padding: 16px;
+  line-height: 1.4;
+  border-bottom: 1px solid #E6E6E6;
+}
+
+.task {
+  padding: 8px 16px;
+  list-style: none;
+  font-size: 14px;
+  color: #999999;
+}
+
+.task:last-child {
+  padding-bottom: 0;
+}
+
+/* option-selector directive */
+
 
 .option-selector {
   position: relative;
@@ -62,6 +95,10 @@ a {
   right: 0;
   top: 10px;
   height: 32px;
+}
+
+.option-selector.open:after {
+  border-color: transparent;
 }
 
 .option-selector-toggle {

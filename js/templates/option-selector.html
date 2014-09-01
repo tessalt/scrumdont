@@ -1,7 +1,7 @@
 <div class="option-selector" ng-class="showOptions ? 'open' : '' ">
   <a class="option-selector-toggle" ng-click="toggleOptions()">{{model[attribute].name || 'Select ' + attribute}} </a>
   <ul class="option-selector-options" ng-show="showOptions">
-    <li ng-click="clearSelection()"></li>
+    <li ng-click="clearSelection()">&nbsp;</li>
     <li ng-repeat="item in collection" ng-click="selectItem(item)">{{item.name}}</li>
   </ul>
 </div>
