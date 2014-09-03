@@ -2,11 +2,11 @@
   "manifest_version": 2,
   "name": "ScrumDon't 2.0",
   "description": "Strollin'",
-  "version": "2.0",
+  "version": "2.1",
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "browser_action": {
     "default_icon": {
-      "19": "scrumdont_48.png"
+      "19": "scrumdont_19.png"
     }
   },
   "icons": {

@@ -82,6 +82,7 @@ angular.module('scrumDont.controllers', []).
         }
         $scope.selectedUser = query.user;
         $scope.statuses = options.project.statuses;
+        $scope.projectSlug = query.project;
         if (options.status) {
           $scope.filters.status = options.project.statuses.indexOf(options.status) + 1;
         }

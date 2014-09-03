@@ -9,5 +9,22 @@
         <small class="task-status status-{{colors[task.status]}}">{{statuses[task.status - 1]}}</small>
       </li>
     </ul>
+    <div class="story-additional-info" ng-show="showInfo">
+      <div  class="story-comments card" ng-show="comments">
+        <h3>Comments: </h3>
+        <ul>
+          <li class="comment" ng-repeat="comment in comments">
+            <p class="story-contents-primary" ng-bind-html="comment.html"></p>
+            <p class="story-contents-secondary"><span class="left">by {{comment.user_name}}</span> <span class="right">{{comment.date | date: 'short'}}</span></p>
+          </li>
+        </ul>
+      </div>
+      <div class="story-attachments card" ng-show="attachments">
+        <h3>Attachments:</h3>
+        <div class="story-images">
+          <story-thumbnail ng-repeat="attachment in attachments" image="attachment" img-size="{{imgSize}}"></story-thumbnail>
+        </div>
+      </div>
+    </div>
   </div>
 </a>

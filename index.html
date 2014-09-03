@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="css/animation.css">
   <script src="js/lib/angular.js"></script>
   <script src="js/lib/angular-resource.js"></script>
+  <script src="js/lib/angular-sanitize.js"></script>
   <script src="js/app.js"></script>
   <script src="js/controllers.js"></script>
   <script src="js/services.js"></script>
@@ -63,7 +64,7 @@
 
       <ul class="stories-list">
         <li ng-repeat="story in stories | filter: {status: filters.status}:exceptEmptyComparator">
-          <story-link story="story" statuses="statuses" user="{{selectedUser}}"></story-link>
+          <story-link story="story" statuses="statuses" user="{{selectedUser}}" project-slug="{{projectSlug}}"></story-link>
         </li>
       </ul>
 

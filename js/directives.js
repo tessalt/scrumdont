@@ -1,4 +1,6 @@
-app.directive('optionSelector', function ($document) {
+angular.module('scrumDont.directives', ['ngSanitize'])
+
+.directive('optionSelector', function ($document) {
   return {
     restrict: 'E',
     templateUrl: 'js/templates/option-selector.html',
@@ -39,29 +41,55 @@ app.directive('optionSelector', function ($document) {
       }
     }
   }
-});
+})
 
-app.directive('storyLink', function ($document) {
+.directive('storyLink', function (commentsService, attachmentsService) {
   return {
     restrict: 'E',
     templateUrl: 'js/templates/story-link.html',
     scope: {
+      projectSlug: '@',
       story: '=',
       statuses: '=',
       user: '@'
     },
-    link: function(scope) {
-      // console.log(scope.statuses[scope.story.status - 1]);
+    link: function(scope, element) {
+      var elWidth = element[0].querySelector('.story-contents').clientWidth;
+      scope.setImgSize(elWidth/4);
     },
     controller: function($scope) {
       $scope.openStory = function() {
-        var url = 'https://www.scrumdo.com/projects/project/' +
-                  $scope.story.project_slug + '/iteration/' +
-                  $scope.story.iteration_id + '#story_' +
-                  $scope.story.id;
-        chrome.tabs.create({'url': url});
+        $scope.showInfo = true;
+        commentsService.query({story: $scope.story.id}, function(data){
+          $scope.comments = data;
+        });
+        attachmentsService.query({project: $scope.projectSlug, story: $scope.story.id}, function(data){
+          $scope.attachments = data;
+        });
       }
       $scope.colors = ['red', 'pink', 'purple', 'indigo', 'teal', 'light-green', 'yellow', 'orange', 'deep-orange', 'brown', 'blue-grey'];
+      $scope.setImgSize = function(width) {
+        $scope.imgSize = width;
+      }
+    },
+  }
+})
+
+.directive('storyThumbnail', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'js/templates/story-thumb.html',
+    scope: {
+      image: '=',
+      imgSize: '@'
+    },
+    link: function(scope) {
+      console.log(scope.image)
+    },
+    controller: function($scope) {
+      $scope.showFullImg = function() {
+        chrome.tabs.create({'url': $scope.image.url});
+      }
     }
   }
 });

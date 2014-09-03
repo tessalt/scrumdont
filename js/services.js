@@ -76,6 +76,24 @@ angular.module('scrumDont.services', ['ngResource'])
 
   })
 
+  .factory('attachmentsService', function ($resource){
+    var resourceConfig = {
+      'query' : {
+        method: 'GET',
+        transformResponse: function(data) {
+          var items = angular.fromJson(data).map(function(item){
+            var filetype = item.filename.split('.').pop();
+            item.imgtype = filetype === 'png' || filetype === 'jpg' ? true : false;
+            return item;
+          });
+          return items;
+        },
+        isArray: true
+      }
+    }
+    return $resource(scrumdoUrl + 'projects/:project/stories/:story/attachments', {}, resourceConfig);
+  })
+
   .factory('iterationStoryService', function ($resource){
     var resourceConfig = {
       'query': {
@@ -99,6 +117,24 @@ angular.module('scrumDont.services', ['ngResource'])
       }
     }
     return $resource(scrumdoUrl + 'projects/:project/iterations/:iteration/stories/:story', {}, resourceConfig);
+  })
+
+  .factory('commentsService', function ($resource) {
+    var resourceConfig = {
+      'query': {
+        method: 'GET',
+        transformResponse: function(data) {
+          var items = angular.fromJson(data).map(function(item){
+            var comment = item;
+            comment.date = new Date(comment.date_submitted);
+            return comment;
+          });
+          return items;
+        },
+        isArray: true
+      }
+    }
+    return $resource('https://www.scrumdo.com/api/v2/comments/story/:story', {}, resourceConfig);
   })
 
 
