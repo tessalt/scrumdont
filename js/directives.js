@@ -54,7 +54,8 @@ angular.module('scrumDont.directives', ['ngSanitize'])
       user: '@'
     },
     link: function(scope, element) {
-
+      var cardWidth = element[0].querySelector('.story-attachments').clientWidth;
+      scope.setImgSize((cardWidth - 24) / 5 );
     },
     controller: function($scope) {
       $scope.openStory = function() {

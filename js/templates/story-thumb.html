@@ -1,4 +1,4 @@
-<div class="story-image"  ng-if="image.imgtype">
+<div class="story-image"  ng-if="image.imgtype" style="width: {{imgSize}}px; height: {{imgSize}}px;">
   <img ng-click="showFullImg()" ng-src="{{image.url}}">
   <div class="story-image-caption">{{image.filename}}</div>
 </div>
