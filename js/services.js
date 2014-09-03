@@ -74,7 +74,7 @@ angular.module('scrumDont.services', ['ngResource', 'ngCachedResource'])
         isArray: true
       }
     }
-    return $cachedResource('story_store', scrumdoUrl + 'projects/:project/stories/:story', {id: '@id'}, resourceConfig);
+    return $resource( scrumdoUrl + 'projects/:project/stories/:story', {id: '@id'}, resourceConfig);
 
   })
 
@@ -102,7 +102,7 @@ angular.module('scrumDont.services', ['ngResource', 'ngCachedResource'])
         isArray: true
       }
     }
-    return $cachedResource('iteration_story_store', scrumdoUrl + 'projects/:project/iterations/:iteration/stories/:story', {id: '@id'}, resourceConfig);
+    return $resource( scrumdoUrl + 'projects/:project/iterations/:iteration/stories/:story', {id: '@id'}, resourceConfig);
   })
 
   .factory('attachmentsService', function ($resource, $cachedResource){

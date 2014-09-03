@@ -1,0 +1,280 @@
+@font-face {
+  font-family: 'robotoregular';
+  src: url('RobotoTTF/Roboto-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'robotolight';
+  src: url('RobotoTTF/Roboto-Light.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'robotomedium';
+  src: url('RobotoTTF/Roboto-Medium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'robotothin';
+  src: url('RobotoTTF/Roboto-Thin.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.cf:before,
+.cf:after {
+    content: " ";
+    display: table;
+}
+
+.cf:after {
+    clear: both;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  -webkit-box-sizing: border-box;
+}
+
+body {
+  font-family: 'robotoregular';
+  background: #F9F9F9;
+  color: rgba(0, 0, 0, 0.87);
+  -webkit-font-smoothing: antialiased;
+}
+
+p, li, dd, dl {
+  font-size: 13px;
+  font-family: 'robotoregular';
+  color: rgba(0,0,0,0.87);
+  line-height: 24px;
+}
+
+/* -- cards --- */
+
+.card {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.16);
+  background: white;
+  border-radius: 2px;
+  border: 1px solid #F2F1F1;
+  margin-bottom: 8px;
+}
+
+.card-header {
+  padding: 16px 16px 0 16px;
+}
+
+.card-header h2 {
+  font-size: 24px;
+  color: rgba(0,0,0,0.87);
+  line-height: 32px;
+  font-weight: normal;
+}
+
+.card-contents {
+  padding: 16px;
+}
+
+/* -- lists --- */
+
+.list {
+  padding: 8px 0;
+}
+
+.list-item {
+  list-style: none;
+  border-bottom: 1px solid #E6E6E6;
+}
+
+.list-item:last-child {
+  border-bottom: 0;
+}
+
+.list-item-icon {
+  padding: 16px;
+  width: 72px;
+  float: left;
+}
+
+.list-item-main {
+  padding: 16px 16px 16px 0;
+  width: calc(100% - 72px);
+  float: left;
+}
+
+.list-item-primary,
+.list-item-secondary {
+  line-height: 24px;
+  font-weight: normal;
+}
+
+.list-item-primary {
+  font-size: 16px;
+}
+
+.list-item-secondary {
+  font-size: 14px;
+  color: rgba(0,0,0,0.54);
+}
+
+/* -- app header -- */
+
+.app-header {
+  background: #009688;
+  height: 64px;
+}
+
+.app-header h1 {
+  font-size: 24px;
+  font-weight: normal;
+  color: white;
+  padding: 20px 24px;
+  line-height: 1;
+  float: left;
+}
+
+.app-header svg {
+  display: block;
+  float: right;
+  width: 24px;
+  height: 24px;
+  margin: 20px 24px;
+  cursor: pointer;
+}
+
+.app-header path,
+.app-header polyline {
+  stroke: white;
+  stroke-width: 3;
+}
+
+/* -- option-selector -- */
+
+.options {
+  background: white;
+  font-size: 0;
+} 
+
+.option-selector {
+  position: relative;
+  display: inline-block;
+  background: #fff;
+  font-size: 16px;
+  font-family: 'robotoregular';
+}
+
+.option-selector:after {
+  content: "";
+  border-right: 1px solid #DEDEDE;
+  position: absolute;
+  right: 0;
+  top: 10px;
+  height: 32px;
+}
+
+.option-selector.open:after {
+  border-color: transparent;
+}
+
+.option-selector input {
+  font-family: inherit;
+  font-size: inherit;
+  padding: 16px 94px 16px 16px;
+  line-height: 1;
+  color: rgba(0,0,0,0.87);
+}
+
+.option-selector input:focus {
+  outline: none;
+}
+
+.option-selector.open {
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+  z-index: 10;
+}
+
+.indicator-arrow {
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 5px 0 5px;
+  border-color: #BBBBBB transparent transparent transparent;
+  position: absolute;
+  right: 16px;
+  top: 22px;
+}
+
+.option-selector.open .indicator-arrow {
+  border-width: 0 5px 5px 5px;
+  border-color: transparent transparent #BBBBBB transparent;
+}
+
+.option-selector-options {
+  position: absolute;
+  left: 0;
+  z-index: 100;
+  font-size: 16px;
+  list-style: none;
+  width: 100%;
+  box-shadow: 0 8px 10px 0 rgba(0, 0, 0, 0.16);
+  max-height: 400px;
+  overflow-y: auto;
+  border-top: 1px solid #DEDEDE;
+  background: white;
+}
+
+.option-selector-options li {
+  font-size: 16px;
+  padding: 16px;
+  line-height: 1;
+  list-style: none;
+}
+
+/* -- story number -- */ 
+
+.story-number {
+  font-size: 22px;
+  float: left;
+  text-align: center;
+  line-height: 1;
+  background: #727272;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  border-radius: 100%;
+  line-height: 40px;
+}
+
+.big-number {
+  font-size: 16px;
+}
+
+/* -- task list -- */
+.task {
+  list-style: none;
+  padding-left: 32px;
+  position: relative;
+}
+.task:before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border: 2px solid #999;
+  left: 0;
+  position: absolute;
+  top: 50%;
+  margin-top: -8px;
+  border-radius: 100%;
+}
+
+.task:last-child {
+  padding-bottom: 0;
+}
