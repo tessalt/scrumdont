@@ -1,8 +1,12 @@
-angular.module('scrumDont.controllers', []).
+angular.module('scrumDont.controllers', ['ngCachedResource']).
 
-  controller('AppController', function ($scope, optionService) {
+  controller('AppController', function ($scope, optionService, $cachedResource, $rootScope) {
     $scope.message = 'Pick a project';
     $scope.loading = false;
+    $scope.clearCache = function() {
+      $cachedResource.clearCache();
+      $rootScope.$emit('optionsChanged');
+    }
   }).
 
   controller('OptionsController', function ($rootScope, $scope, projectService, iterationService, optionService) {

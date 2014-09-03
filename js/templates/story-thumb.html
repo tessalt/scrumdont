@@ -1,4 +1,7 @@
-<div class="story-image"  ng-if="image.imgtype" style="width: {{imgSize}}px; height: {{imgSize}}px;">
-  <img ng-click="showFullImg()" ng-src="{{image.url}}">
+<div ng-click="showFullImg()" class="story-image"  ng-if="image.imgtype" style="width: {{imgSize}}px; height: {{imgSize}}px;">
+  <img ng-src="{{image.url}}">
   <div class="story-image-caption">{{image.filename}}</div>
 </div>
+<modal-dialog show='modalShown' width='750px' height='70%'>
+  <p><img ng-src="{{image.url}}" /><p>
+</modal-dialog>
