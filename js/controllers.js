@@ -9,7 +9,7 @@ angular.module('scrumDont.controllers', []).
 
     $scope.options = optionService.getOptions();
 
-    $scope.projects = projectService.query();
+    $scope.projects = projectService.getAll();
 
     $scope.iterations = $scope.options.project ? iterationService.query({project: $scope.options.project.slug}) : '';
 

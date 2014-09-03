@@ -1,10 +1,10 @@
 var scrumdoUrl = 'https://www.scrumdo.com/api/v2/organizations/telus3/';
 
-angular.module('scrumDont.services', ['ngResource'])
+angular.module('scrumDont.services', ['ngResource', 'ngCachedResource'])
 
-  .factory('projectService', function ($resource){
+  .factory('projectService', function ($resource, $cachedResource){
     var resourceConfig = {
-      'query': {
+      'getAll': {
         method: 'GET',
         transformResponse: function(data) {
           var transformed = angular.fromJson(data).map(function(item){
@@ -27,10 +27,10 @@ angular.module('scrumDont.services', ['ngResource'])
         isArray: true
       }
     }
-    return $resource(scrumdoUrl + 'projects/:project', {}, resourceConfig);
+    return $cachedResource('project_store', scrumdoUrl + 'projects/:project', {id: '@id'}, resourceConfig);
   })
 
-  .factory('iterationService', function ($resource) {
+  .factory('iterationService', function ($resource, $cachedResource) {
     var resourceConfig = {
       'query': {
         method: 'GET',
@@ -47,10 +47,10 @@ angular.module('scrumDont.services', ['ngResource'])
         isArray: true
       }
     }
-    return $resource(scrumdoUrl + 'projects/:project/iterations/:iteration', {}, resourceConfig);
+    return $cachedResource('iteration_store', scrumdoUrl + 'projects/:project/iterations/:iteration', {id: '@id'}, resourceConfig);
   })
 
-  .factory('storyService', function ($resource){
+  .factory('storyService', function ($resource, $cachedResource){
     var resourceConfig = {
       'query': {
         method: 'GET',
@@ -74,29 +74,11 @@ angular.module('scrumDont.services', ['ngResource'])
         isArray: true
       }
     }
-    return $resource(scrumdoUrl + 'projects/:project/stories/:story', {}, resourceConfig);
+    return $cachedResource('story_store', scrumdoUrl + 'projects/:project/stories/:story', {id: '@id'}, resourceConfig);
 
   })
 
-  .factory('attachmentsService', function ($resource){
-    var resourceConfig = {
-      'query' : {
-        method: 'GET',
-        transformResponse: function(data) {
-          var items = angular.fromJson(data).map(function(item){
-            var filetype = item.filename.split('.').pop();
-            item.imgtype = filetype === 'png' || filetype === 'jpg' ? true : false;
-            return item;
-          });
-          return items;
-        },
-        isArray: true
-      }
-    }
-    return $resource(scrumdoUrl + 'projects/:project/stories/:story/attachments', {}, resourceConfig);
-  })
-
-  .factory('iterationStoryService', function ($resource){
+  .factory('iterationStoryService', function ($resource, $cachedResource){
     var resourceConfig = {
       'query': {
         method: 'GET',
@@ -120,10 +102,29 @@ angular.module('scrumDont.services', ['ngResource'])
         isArray: true
       }
     }
-    return $resource(scrumdoUrl + 'projects/:project/iterations/:iteration/stories/:story', {}, resourceConfig);
+    return $cachedResource('iteration_story_store', scrumdoUrl + 'projects/:project/iterations/:iteration/stories/:story', {id: '@id'}, resourceConfig);
   })
 
-  .factory('commentsService', function ($resource) {
+  .factory('attachmentsService', function ($resource, $cachedResource){
+    var resourceConfig = {
+      'query' : {
+        method: 'GET',
+        transformResponse: function(data) {
+          var items = angular.fromJson(data).map(function(item){
+            var filetype = item.filename.split('.').pop();
+            item.imgtype = filetype === 'png' || filetype === 'jpg' ? true : false;
+            return item;
+          });
+          return items;
+        },
+        isArray: true
+      }
+    }
+    return $cachedResource('attachment_store', scrumdoUrl + 'projects/:project/stories/:story/attachments', {id: '@id'}, resourceConfig);
+  })
+
+
+  .factory('commentsService', function ($cachedResource) {
     var resourceConfig = {
       'query': {
         method: 'GET',
@@ -138,12 +139,12 @@ angular.module('scrumDont.services', ['ngResource'])
         isArray: true
       }
     }
-    return $resource('https://www.scrumdo.com/api/v2/comments/story/:story', {}, resourceConfig);
+    return $cachedResource('comment_store', 'https://www.scrumdo.com/api/v2/comments/story/:story', {id: '@id'}, resourceConfig);
   })
 
 
-  .factory('taskService', function ($resource) {
-    return $resource(scrumdoUrl + 'projects/:project/stories/:story/tasks/:task');
+  .factory('taskService', function ($resource, $cachedResource) {
+    return $cachedResource('task_store', scrumdoUrl + 'projects/:project/stories/:story/tasks/:task', {id: '@id'});
   })
 
   .factory('customStoryService', function ($resource, $q, storyService, taskService, iterationStoryService) {
