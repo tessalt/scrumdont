@@ -94,6 +94,10 @@ a {
   list-style: none;
 }
 
+.stories-list li {
+  overflow: hidden;
+}
+
 /* option-selector directive */
 
 .option-selector {
@@ -248,10 +252,6 @@ a {
   float: right;
 }
 
-.story dl {
-  padding-bottom: 16px;
-}
-
 .story dt {
   font-size: 16px;
   font-weight: normal;
@@ -332,6 +332,10 @@ a {
   padding: 16px;
   list-style: none;
   border-bottom: 1px solid #E6E6E6;
+}
+
+.comment:last-child {
+  border: 0;
 }
 
 .story-images {
