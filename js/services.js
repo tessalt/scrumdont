@@ -63,7 +63,9 @@ angular.module('scrumDont.services', ['ngResource'])
               number: item.number,
               status: item.status,
               iteration_id: item.iteration_id,
-              project_slug: item.project_slug
+              project_slug: item.project_slug,
+              category: item.category,
+              created: new Date(item.created)
             }
             return story;
           });
@@ -107,7 +109,9 @@ angular.module('scrumDont.services', ['ngResource'])
               number: item.number,
               status: item.status,
               iteration_id: item.iteration_id,
-              project_slug: item.project_slug
+              project_slug: item.project_slug,
+              category: item.category,
+              created: new Date(item.created)
             }
             return story;
           });

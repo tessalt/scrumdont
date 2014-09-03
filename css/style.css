@@ -44,6 +44,20 @@ a {
   color: #444444;
 }
 
+.button {
+  padding: 11px 20px;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+  background: #5677fc;
+  -webkit-transition: background .2s;
+}
+
+.button:hover {
+  background: #4e6cef;
+}
+
 .app-header {
   background: #00bcd4;
   padding: 32px 16px;
@@ -186,6 +200,10 @@ a {
   width: calc(100% - 104px);
 }
 
+.story-contents-main {
+  cursor: pointer;
+}
+
 .story-contents-primary {
   font-size: 16px;
   font-weight: normal;
@@ -208,6 +226,24 @@ a {
 .story-contents-secondary .right {
   display: block;
   float: right;
+}
+
+.story dl {
+  padding-bottom: 16px;
+}
+
+.story dt {
+  font-size: 16px;
+  font-weight: normal;
+  color: #464646;
+  line-height: 24px;
+}
+
+.story dd {
+  font-size: 14px;
+  line-height: 24px;
+  color: #999999;
+  padding-bottom: 16px;
 }
 
 .task {
@@ -240,7 +276,19 @@ a {
 }
 
 .story-additional-info {
+}
 
+.col1,
+.col2 {
+  width: 49.5%;
+}
+
+.col1 {
+  float: left;
+}
+
+.col2 {
+  float: right;
 }
 
 .story-additional-info h3 {
@@ -271,10 +319,11 @@ a {
   overflow: hidden;
   float: left;
   position: relative;
+  width: 50%;
 }
 
 .story-image img {
-  max-height: 100%;
+  max-width: 100%;
 }
 
 .story-image-caption {
@@ -286,6 +335,14 @@ a {
   width: 100%;
   color: white;
   text-transform: uppercase;
+}
+
+.story-details-content {
+  padding: 8px 0 16px 16px;
+}
+
+.story-details-content p {
+  padding-bottom: 12px;
 }
 
 .status-pink {
