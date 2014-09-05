@@ -95,7 +95,6 @@ angular.module('scrumDont.controllers', ['ngCachedResource']).
           $scope.loading = true;
           customStoryService.query(query).then(function(data){
             $scope.stories = data.stories;
-            console.log(data);
             $scope.loading = false;
           }, function(error){
             $scope.stories = [];

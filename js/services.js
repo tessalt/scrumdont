@@ -179,23 +179,29 @@ angular.module('scrumDont.services', ['ngResource', 'ngCachedResource'])
           var storyWithTasks = angular.extend(story, tasks);
           deferred.resolve(storyWithTasks);
         });
-      } else {
-        deferred.resolve({story: story, tasks: ''});
+      } else {        
+        deferred.resolve(angular.extend(story, {tasks: ''}));
       }
       return deferred.promise;
     }
 
-    function _getStoriesForUser(options, fn) {
+    function _getStoriesWithTasks(options, fn) {
       var storyResource = _getStoryResource(options);
       storyResource.query(options, function (stories){
         var promises = [];
         angular.forEach(stories, function (story){
           promises.push(_getTasksForStory(options.project, story));
         });
-        $q.all(promises).then(function (promiseData){
-          var storiesWithTasks = promiseData.filter(function (item){
-            return item.tasks.length && item.assignees.indexOf(options.user) > -1;
-          });
+        $q.all(promises).then(function (promiseData){        
+          console.log(promiseData);  
+          var storiesWithTasks;
+          if (options.user) {          
+            storiesWithTasks = promiseData.filter(function (item){              
+              return item.tasks.length && item.assignees.indexOf(options.user) > -1;
+            });
+          } else {
+            storiesWithTasks = promiseData;
+          }
           fn(storiesWithTasks);
         });
       });
@@ -204,23 +210,13 @@ angular.module('scrumDont.services', ['ngResource', 'ngCachedResource'])
     function _getStories(options) {
       var deferred = $q.defer();
       var storyResource = _getStoryResource(options);
-      if (options.user) {
-        _getStoriesForUser(options, function (storyData){
-          if (storyData.length) {
-            deferred.resolve({stories: storyData});
-          } else {
-            deferred.reject('no stories');
-          }
-        });
-      } else {
-        storyResource.query(options, function (storyData){
-          if (storyData.length) {
-            deferred.resolve({stories: storyData});
-          } else {
-            deferred.reject('no stories');
-          }
-        });
-      }
+      _getStoriesWithTasks(options, function (storyData){
+        if (storyData.length) {
+          deferred.resolve({stories: storyData});
+        } else {
+          deferred.reject('no stories');
+        }
+      });
       return deferred.promise;
     }
 

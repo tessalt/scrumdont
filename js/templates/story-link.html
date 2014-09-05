@@ -4,9 +4,9 @@
   </div>
   <div class="story-contents">
     <div class="story-contents-main" ng-click="openStory()">
-      <h2 class="story-contents-primary">{{story.summary}} <small class="story-status status-{{colors[story.status]}}">{{statuses[story.status - 1]}}</small></h2>
+      <h2 class="story-contents-primary">{{story.summary}} <small class="story-status label status-{{colors[story.status]}}">{{statuses[story.status - 1]}}</small></h2>
       <ul class="task-list story-contents-secondary">
-      <li class="task" ng-repeat="task in story.tasks | filter: {assignee.username : user}">{{task.summary}}
+      <li class="task" ng-repeat="task in story.tasks | filter: {assignee.username : user}">{{task.summary}} <span ng-hide="user" class="task-assignee label">{{task.assignee.username}}</span class="task-assignee label">
         <small class="task-status status-{{colors[task.status]}}">{{statuses[task.status - 1]}}</small>
       </li>
     </ul>
