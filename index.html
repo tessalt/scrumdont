@@ -68,7 +68,7 @@
 
       <ul class="stories-list">
         <li ng-repeat="story in stories | filter: {status: filters.status}:exceptEmptyComparator">
-          <story-link story="story" statuses="statuses" user="{{selectedUser}}" project-slug="{{projectSlug}}"></story-link>
+          <story-link story="story" statuses="statuses" user="{{query.user}}" project-slug="{{query.project}}"></story-link>
         </li>
       </ul>
 

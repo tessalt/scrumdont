@@ -49,12 +49,12 @@ angular.module('scrumDont.controllers', ['ngCachedResource']).
 
     $scope.filters = {};
 
-    _showStories();
-
     $scope.$on('$destroy', function(){
       watchOptions();
       watchFilters();
     });
+
+    showStories();
 
     $scope.exceptEmptyComparator = function (actual, expected) {
       if (!expected) {
@@ -64,7 +64,7 @@ angular.module('scrumDont.controllers', ['ngCachedResource']).
     }
 
     var watchOptions = $rootScope.$on('optionsChanged', function(){
-      _showStories()
+      showStories()
     });
 
     var watchFilters = $rootScope.$on('filtersChanged', function(){
@@ -76,24 +76,22 @@ angular.module('scrumDont.controllers', ['ngCachedResource']).
       }
     });
 
-    function _showStories() {
+    function showStories() {
       var options = optionService.getOptions();
       if (options.project) {
-        var query = {
+        $scope.query = {
           project: options.project.slug,
           iteration: options.iteration.id,
           user: options.user.name
-        }
-        $scope.selectedUser = query.user;
-        $scope.statuses = options.project.statuses;
-        $scope.projectSlug = query.project;
+        }        
+        $scope.statuses = options.project.statuses;        
         if (options.status) {
           $scope.filters.status = options.project.statuses.indexOf(options.status) + 1;
         }
-        if (query.project) {
+        if ($scope.query.project) {
           $scope.message = '';
           $scope.loading = true;
-          customStoryService.query(query).then(function(data){
+          customStoryService.query($scope.query).then(function(data){
             $scope.stories = data.stories;
             $scope.loading = false;
           }, function(error){
