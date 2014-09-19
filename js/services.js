@@ -193,7 +193,6 @@ angular.module('scrumDont.services', ['ngResource', 'ngCachedResource'])
           promises.push(_getTasksForStory(options.project, story));
         });
         $q.all(promises).then(function (promiseData){        
-          console.log(promiseData);  
           var storiesWithTasks;
           if (options.user) {          
             storiesWithTasks = promiseData.filter(function (item){              
