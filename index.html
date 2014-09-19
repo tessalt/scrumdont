@@ -60,18 +60,10 @@
 
     </div>
 
-    <div class="stories" ng-controller="StoriesController">
+    <div class="stories">
 
-      <div class="loading" ng-show="loading"></div>
-
-      <div class="message" ng-show="message">{{message}}</div>
-
-      <ul class="stories-list">
-        <li ng-repeat="story in stories | filter: {status: filters.status}:exceptEmptyComparator">
-          <story-link story="story" statuses="statuses" user="{{query.user}}" project-slug="{{query.project}}"></story-link>
-        </li>
-      </ul>
-
+      <story-list></story-list>
+     
     </div>
 
   </div>

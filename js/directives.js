@@ -43,10 +43,10 @@ angular.module('scrumDont.directives', ['ngSanitize'])
   }
 })
 
-.directive('storyLink', function (commentsService, attachmentsService) {
+.directive('storyItem', function (commentsService, attachmentsService) {
   return {
     restrict: 'E',
-    templateUrl: 'js/templates/story-link.html',
+    templateUrl: 'js/templates/story-item.html',
     scope: {
       projectSlug: '@',
       story: '=',
@@ -124,4 +124,58 @@ app.directive('modalDialog', function() {
     },
     templateUrl: 'js/templates/modal-dialog.html' // See below
   };
+});
+
+app.directive('storyList', function (customStoryService, optionService, $rootScope) {
+  return {
+    restrict: 'E',    
+    templateUrl: 'js/templates/story-list.html',
+    controller: function($scope) {     
+      $scope.filters = {};
+      var fetchStories = function() {
+        var options = optionService.getOptions();
+        if (options.project) {
+          $scope.query = {
+            project: options.project.slug,
+            iteration: options.iteration.id,
+            user: options.user.name
+          }        
+          $scope.statuses = options.project.statuses;        
+          if (options.status) {
+            $scope.filters.status = options.project.statuses.indexOf(options.status) + 1;
+          }
+          if ($scope.query.project) {
+            $scope.message = '';
+            $scope.loading = true;
+            customStoryService.query($scope.query).then(function(data){
+              $scope.stories = data.stories;
+              $scope.loading = false;
+            }, function(error){
+              $scope.stories = [];
+              $scope.message = error;
+              $scope.loading = false;
+            });
+          }
+        }
+      }
+      fetchStories();
+      $rootScope.$on('optionsChanged', function(e) {
+        fetchStories();
+      });
+      $rootScope.$on('filtersChanged', function(){
+        var options = optionService.getOptions();
+        if (options.status) {
+          $scope.filters.status = options.project.statuses.indexOf(options.status) + 1;
+        } else {
+          $scope.filters.status = '';
+        }
+      });
+      $scope.exceptEmptyComparator = function (actual, expected) {
+        if (!expected) {
+           return true;
+        }
+        return angular.equals(expected, actual);
+      }
+    }
+  }
 });
