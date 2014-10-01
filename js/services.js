@@ -18,7 +18,8 @@ angular.module('scrumDont.services', ['ngResource', 'ngCachedResource'])
               name: item.name,
               slug: item.slug,
               url: item.url,
-              statuses: item.statuses
+              statuses: item.statuses,
+              categories: item.categories
             }
             return project;
           });
@@ -244,13 +245,15 @@ angular.module('scrumDont.services', ['ngResource', 'ngCachedResource'])
         project: JSON.parse(localStorage.getItem('project')) || '',
         user: JSON.parse(localStorage.getItem('user')) || '',
         iteration: JSON.parse(localStorage.getItem('iteration')) || '',
-        status: JSON.parse(localStorage.getItem('status')) || ''
+        status: JSON.parse(localStorage.getItem('status')) || '',
+        category: JSON.parse(localStorage.getItem('category')) || ''
       }
     }
 
     function _getFilters() {
       return {
-        status: JSON.parse(localStorage.getItem('status')) || ''
+        status: JSON.parse(localStorage.getItem('status')) || '',
+        category: JSON.parse(localStorage.getItem('category')) || ''
       }
     }
 

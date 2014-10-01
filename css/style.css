@@ -104,6 +104,7 @@ a {
   position: relative;
   display: inline-block;
   background: #fff;
+  width: 20%;
 }
 
 .option-selector.open {
@@ -125,7 +126,7 @@ a {
 }
 
 .option-selector-toggle {
-  padding: 16px 94px 16px 24px;
+  padding: 16px 0 16px 24px;
   display: inline-block;
   position: relative;
   font-size: 16px;

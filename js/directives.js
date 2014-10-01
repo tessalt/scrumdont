@@ -141,8 +141,12 @@ app.directive('storyList', function (customStoryService, optionService, $rootSco
             user: options.user.name
           }        
           $scope.statuses = options.project.statuses;        
+          $scope.categories = options.project.categories;        
           if (options.status) {
             $scope.filters.status = options.project.statuses.indexOf(options.status) + 1;
+          }
+          if (options.category) {
+            $scope.filters.category = options.category;
           }
           if ($scope.query.project) {
             $scope.message = '';
@@ -168,6 +172,11 @@ app.directive('storyList', function (customStoryService, optionService, $rootSco
           $scope.filters.status = options.project.statuses.indexOf(options.status) + 1;
         } else {
           $scope.filters.status = '';
+        }
+        if (options.category) {
+          $scope.filters.category = options.category;
+        } else {
+          $scope.filters.category = '';
         }
       });
       $scope.exceptEmptyComparator = function (actual, expected) {
