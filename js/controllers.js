@@ -9,13 +9,20 @@ angular.module('scrumDont.controllers', ['ngCachedResource']).
     }
   }).
 
-  controller('OptionsController', function ($rootScope, $scope, projectService, iterationService, optionService) {
+  controller('OptionsController', function ($rootScope, $scope, $document, projectService, iterationService, optionService) {
 
     $scope.options = optionService.getOptions();
 
     $scope.projects = projectService.getAll();
+    $scope.showSearch = false;
 
     $scope.iterations = $scope.options.project ? iterationService.query({project: $scope.options.project.slug}) : '';
+   
+    $document.on('keyup', function(e) {      
+      if (e.which === 83) {
+        $scope.showSearch = true;
+      }
+    });
 
     $scope.changeOptions = function(model) {
       if (model === 'project') {
