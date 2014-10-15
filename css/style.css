@@ -63,6 +63,7 @@ a {
   padding:  16px;
   color: white;
   overflow: hidden;
+  height: 66px;
 }
 
 .app-header h1 {
@@ -77,11 +78,39 @@ a {
   height: 34px;
   fill: white;
   cursor: pointer;
+  margin: 0 5px;
+}
+
+.app-header svg.close-icon {
+  width: 24px;
+  height: 24px;
+  margin-top: 5px;
 }
 
 .app-header svg path,
 .app-header svg polyline {
   stroke: white;
+}
+
+.search-form {
+  position: absolute;
+  width: calc(100% - 92px);
+  display: block;
+}
+
+.search-form input {
+  padding: 6px;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid white;
+  width: 100%;
+  font-family: inherit;
+  font-size: 18px;
+  color: rgba(255,255,255,0.7);
+}
+
+.search-form input:focus {
+  outline: none;
 }
 
 .options {

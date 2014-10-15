@@ -99,7 +99,7 @@ angular.module('scrumDont.directives', ['ngSanitize'])
       $scope.showFullImg = function() {
         $scope.modalShown = !$scope.modalShown;
         console.log('$scope.modalShown');
-      };     
+      };
     }
   }
 });
@@ -126,11 +126,11 @@ app.directive('modalDialog', function() {
   };
 });
 
-app.directive('storyList', function (customStoryService, optionService, $rootScope) {
+app.directive('storyList', function (customStoryService, optionService, $rootScope, storySearchService, $q) {
   return {
-    restrict: 'E',    
+    restrict: 'E',
     templateUrl: 'js/templates/story-list.html',
-    controller: function($scope) {     
+    controller: function($scope) {
       $scope.filters = {};
       var fetchStories = function() {
         var options = optionService.getOptions();
@@ -139,9 +139,9 @@ app.directive('storyList', function (customStoryService, optionService, $rootSco
             project: options.project.slug,
             iteration: options.iteration.id,
             user: options.user.name
-          }        
-          $scope.statuses = options.project.statuses;        
-          $scope.categories = options.project.categories;        
+          }
+          $scope.statuses = options.project.statuses;
+          $scope.categories = options.project.categories;
           if (options.status) {
             $scope.filters.status = options.project.statuses.indexOf(options.status) + 1;
           }
@@ -162,9 +162,40 @@ app.directive('storyList', function (customStoryService, optionService, $rootSco
           }
         }
       }
+      var searchStories = function(query) {
+        $scope.loading = true;
+        storySearchService.query({project: $scope.options.project.slug}, {q: query}, function (data) {
+          if (data.items.length) {
+            var promises = [];
+            angular.forEach(data.items, function (story){
+              promises.push(customStoryService.getTasks($scope.options.project.slug, story));
+            });
+            $q.all(promises).then(function (promiseData){
+              $scope.filters.categroy = '';
+              $scope.filters.status = '';
+              $scope.loading = false;
+              $scope.stories = promiseData;
+            }, function() {
+              $scope.loading = false;
+              $scope.message = 'No matches';
+            });
+          } else {
+            $scope.loading = false;
+            $scope.message = 'No matches';
+          }
+        });
+      }
       fetchStories();
       $rootScope.$on('optionsChanged', function(e) {
         fetchStories();
+      });
+      $rootScope.$on('searchSubmitted', function() {
+        var searchString = optionService.getSearchString();
+        if (searchString.length) {
+          searchStories(searchString);
+        } else {
+          fetchStories();
+        }
       });
       $rootScope.$on('filtersChanged', function(){
         var options = optionService.getOptions();
@@ -184,6 +215,51 @@ app.directive('storyList', function (customStoryService, optionService, $rootSco
            return true;
         }
         return angular.equals(expected, actual);
+      }
+    }
+  }
+});
+
+app.directive('refreshIcon', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'js/templates/refresh-icon.html'
+  }
+});
+
+app.directive('searchIcon', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'js/templates/search-icon.html'
+  }
+});
+
+app.directive('closeIcon', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'js/templates/close-icon.html'
+  }
+});
+
+app.directive('searchInput', function ($rootScope, optionService) {
+  return {
+    restrict: 'E',
+    templateUrl: 'js/templates/search-input.html',
+    scope: {
+      toggle: '='
+    },
+    link: function (scope, el) {
+      scope.$watch('toggle', function() {
+        if (scope.toggle) {
+          el[0].querySelector('input').focus();
+        }
+      }, true);
+    },
+    controller: function ($scope) {
+      $scope.query = '';
+      $scope.search = function () {
+        optionService.setSearchString($scope.query);
+        $rootScope.$emit('searchSubmitted');
       }
     }
   }

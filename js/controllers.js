@@ -1,28 +1,25 @@
 angular.module('scrumDont.controllers', ['ngCachedResource']).
 
-  controller('AppController', function ($scope, optionService, $cachedResource, $rootScope) {
+  controller('AppController', function ($scope, optionService, $cachedResource, $rootScope, $document,  projectService, iterationService, storySearchService) {
     $scope.message = 'Pick a project';
     $scope.loading = false;
+    $scope.showSearch = false;
+    $scope.searchQuery = '';
+
     $scope.clearCache = function() {
       $cachedResource.clearCache();
       $rootScope.$emit('optionsChanged');
     }
-  }).
 
-  controller('OptionsController', function ($rootScope, $scope, $document, projectService, iterationService, optionService) {
+    $scope.toggleSearch = function() {
+      $scope.showSearch = !$scope.showSearch;
+    }
 
     $scope.options = optionService.getOptions();
 
     $scope.projects = projectService.getAll();
-    $scope.showSearch = false;
 
     $scope.iterations = $scope.options.project ? iterationService.query({project: $scope.options.project.slug}) : '';
-   
-    $document.on('keyup', function(e) {      
-      if (e.which === 83) {
-        $scope.showSearch = true;
-      }
-    });
 
     $scope.changeOptions = function(model) {
       if (model === 'project') {

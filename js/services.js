@@ -106,6 +106,16 @@ angular.module('scrumDont.services', ['ngResource', 'ngCachedResource'])
     return $resource( scrumdoUrl + 'projects/:project/iterations/:iteration/stories/:story', {id: '@id'}, resourceConfig);
   })
 
+  .factory('storySearchService', function ($resource) {
+    var resourceConfig = {
+      'query': {
+        method: 'GET',
+        isArray: false
+      }
+    }
+    return $resource(scrumdoUrl + 'projects/:project/search', {q: '@q'}, resourceConfig);
+  })
+
   .factory('attachmentsService', function ($resource, $cachedResource){
     var resourceConfig = {
       'query' : {
@@ -180,7 +190,7 @@ angular.module('scrumDont.services', ['ngResource', 'ngCachedResource'])
           var storyWithTasks = angular.extend(story, tasks);
           deferred.resolve(storyWithTasks);
         });
-      } else {        
+      } else {
         deferred.resolve(angular.extend(story, {tasks: ''}));
       }
       return deferred.promise;
@@ -193,10 +203,10 @@ angular.module('scrumDont.services', ['ngResource', 'ngCachedResource'])
         angular.forEach(stories, function (story){
           promises.push(_getTasksForStory(options.project, story));
         });
-        $q.all(promises).then(function (promiseData){        
+        $q.all(promises).then(function (promiseData){
           var storiesWithTasks;
-          if (options.user) {          
-            storiesWithTasks = promiseData.filter(function (item){              
+          if (options.user) {
+            storiesWithTasks = promiseData.filter(function (item){
               return item.tasks.length && item.assignees.indexOf(options.user) > -1;
             });
           } else {
@@ -221,12 +231,15 @@ angular.module('scrumDont.services', ['ngResource', 'ngCachedResource'])
     }
 
     return {
-      query: _getStories
+      query: _getStories,
+      getTasks: _getTasksForStory
     }
 
   })
 
   .factory('optionService', function(){
+
+    var searchString = '';
 
     function _setOptions(options) {
 
@@ -257,9 +270,20 @@ angular.module('scrumDont.services', ['ngResource', 'ngCachedResource'])
       }
     }
 
+    function _getSearchString() {
+      return searchString;
+    }
+
+    function _setSearchString(query) {
+      searchString = query;
+      return searchString;
+    }
+
     return {
       setOptions: _setOptions,
       getOptions: _getOptions,
-      getFilters: _getFilters
+      getFilters: _getFilters,
+      setSearchString: _setSearchString,
+      getSearchString: _getSearchString
     }
   })
