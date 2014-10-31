@@ -63,9 +63,11 @@ angular.module('scrumDont.services', ['ngResource', 'ngCachedResource'])
               task_count: item.task_count,
               number: item.number,
               status: item.status,
+              detail: item.detail_html,
               iteration_id: item.iteration_id,
               project_slug: item.project_slug,
               category: item.category,
+              points: item.points,
               created: new Date(item.created)
             }
             return story;
@@ -91,9 +93,11 @@ angular.module('scrumDont.services', ['ngResource', 'ngCachedResource'])
               task_count: item.task_count,
               number: item.number,
               status: item.status,
+              detail: item.detail_html,
               iteration_id: item.iteration_id,
               project_slug: item.project_slug,
               category: item.category,
+              points: item.points,
               created: new Date(item.created)
             }
             return story;

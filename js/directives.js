@@ -43,7 +43,7 @@ angular.module('scrumDont.directives', ['ngSanitize'])
   }
 })
 
-.directive('storyItem', function (commentsService, attachmentsService) {
+.directive('storyItem', function (commentsService, attachmentsService, $sce) {
   return {
     restrict: 'E',
     templateUrl: 'js/templates/story-item.html',
@@ -58,6 +58,7 @@ angular.module('scrumDont.directives', ['ngSanitize'])
       scope.setImgSize((cardWidth - 24) / 5 );
     },
     controller: function($scope) {
+      $scope.storyDetails = $sce.trustAsHtml($scope.story.detail);
       $scope.openStory = function() {
         if (!$scope.showInfo) {
           commentsService.query({story: $scope.story.id}, function(data){

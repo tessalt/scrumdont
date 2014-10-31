@@ -4,24 +4,23 @@
   </div>
   <div class="story-contents">
     <div class="story-contents-main" ng-click="openStory()">
-      <h2 class="story-contents-primary">{{story.summary}} <small><strong>{{story.category}}</strong></small>  <small class="story-status label status-{{colors[story.status]}}">{{statuses[story.status - 1]}}</small></h2>
+      <h2 class="story-contents-primary">{{story.summary}} <small></small>  <small class="story-status label status-{{colors[story.status]}}">{{statuses[story.status - 1]}}</small></h2>
       <ul class="task-list story-contents-secondary">
-      <li class="task" ng-repeat="task in story.tasks | filter: {assignee.username : user}">{{task.summary}} <span ng-hide="user" class="task-assignee label">{{task.assignee.username}}</span class="task-assignee label">
-        <small class="task-status status-{{colors[task.status]}}">{{statuses[task.status - 1]}}</small>
-      </li>
-    </ul>
+        <li class="task" ng-repeat="task in story.tasks | filter: {assignee.username : user}">{{task.summary}} <span ng-hide="user" class="task-assignee label">{{task.assignee.username}}</span class="task-assignee label">
+          <small class="task-status status-{{colors[task.status]}}">{{statuses[task.status - 1]}}</small>
+        </li>
+      </ul>
+      <p>Points: <strong>{{story.points}}</strong> | Category: <strong>{{story.category}}</strong></p>
     </div>
     <div class="story-additional-info" ng-show="showInfo">
       <div class="col1">
         <div class="story-details card">
-          <h3>Details:</h3>
           <div class="story-details-content">
-            <dl>
-              <dt>Category:</dt>
-              <dd>{{story.category}}</dd>
+            <dl> 
+              <dt>Details: </dt>
+              <dd class="details-html" ng-bind-html="storyDetails"></dd>
               <dt>Created: </dt>
               <dd>{{story.created | date:'medium'}}</dd>
-              <p>{{story.details}}</p>
             </dl>
             <p><a class="button" target="_blank" href="{{url}}">View in ScrumDo</a></p>
           </div>
