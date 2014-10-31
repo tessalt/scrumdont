@@ -1,16 +1,18 @@
 <div class="story">
-  <div class="story-number {{story.number > 99 ? 'big-number' : ''}}">
-    {{story.number}}
+  <div class="story-nums">
+    <div class="story-number {{story.number > 99 ? 'big-number' : ''}}">
+      {{story.number}}
+    </div>
+    <div class="story-points"><span class="story-point" ng-repeat="n in range track by $index"></span></div>
   </div>
   <div class="story-contents">
     <div class="story-contents-main" ng-click="openStory()">
-      <h2 class="story-contents-primary">{{story.summary}} <small></small>  <small class="story-status label status-{{colors[story.status]}}">{{statuses[story.status - 1]}}</small></h2>
+      <h2 class="story-contents-primary">{{story.summary}} <small><strong>{{story.category}}</strong></small>  <small class="story-status label status-{{colors[story.status]}}">{{statuses[story.status - 1]}}</small></h2>
       <ul class="task-list story-contents-secondary">
         <li class="task" ng-repeat="task in story.tasks | filter: {assignee.username : user}">{{task.summary}} <span ng-hide="user" class="task-assignee label">{{task.assignee.username}}</span class="task-assignee label">
           <small class="task-status status-{{colors[task.status]}}">{{statuses[task.status - 1]}}</small>
         </li>
       </ul>
-      <p>Points: <strong>{{story.points}}</strong> | Category: <strong>{{story.category}}</strong></p>
     </div>
     <div class="story-additional-info" ng-show="showInfo">
       <div class="col1">

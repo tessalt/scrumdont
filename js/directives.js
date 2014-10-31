@@ -59,6 +59,7 @@ angular.module('scrumDont.directives', ['ngSanitize'])
     },
     controller: function($scope) {
       $scope.storyDetails = $sce.trustAsHtml($scope.story.detail);
+      $scope.range = new Array(parseInt($scope.story.points));
       $scope.openStory = function() {
         if (!$scope.showInfo) {
           commentsService.query({story: $scope.story.id}, function(data){

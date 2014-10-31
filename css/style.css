@@ -225,20 +225,24 @@ a {
   overflow: hidden;
   display: block;
   -webkit-transition: background .2s;
+  position: relative;
 }
 
 .story:hover {
   /*background: white;*/
 }
 
+.story-nums {
+  float: left;
+  margin: 0 16px;
+  width: 40px;
+}
+
 .story-number {
   font-size: 22px;
-  float: left;
   text-align: center;
   line-height: 1;
-  margin: 0 16px;
   background: #727272;
-  width: 40px;
   height: 40px;
   color: #fff;
   border-radius: 100%;
@@ -247,6 +251,21 @@ a {
 
 .big-number {
   font-size: 16px;
+}
+
+.story-points {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.story-point {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background: #999;
+  display: inline-block;
+  margin: 5px;
 }
 
 .story-contents {
